@@ -1,0 +1,15 @@
+T__0=1
+NEWLINE=2
+INT=3
+REAL=4
+MULD=5
+PLUSM=6
+ID=7
+WS=8
+LP=9
+RP=10
+SEMI=11
+'='=1
+'('=9
+')'=10
+';'=11

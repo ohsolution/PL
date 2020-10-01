@@ -3,11 +3,11 @@ grammar Expr;
 
 // parser rules
 prog	:   (assn SEMI NEWLINE? | expr SEMI NEWLINE?)*;
-expr    :   expr MULD expr
+expr    :   LP expr RP
+        |   expr MULD expr
         |   expr PLUSM expr
         |   num
         |   ID
-        |   LP expr RP
         ;
 assn    :   ID '=' num
         ;
@@ -17,8 +17,8 @@ num     :   INT
 
 // lexer rules
 NEWLINE	: [\r\n]+ ;
-INT	: '-'?[0-9]+ ;
-REAL: '-'?[0-9]+'.'[0-9]* ;
+INT	: [+-]?[0-9]+ ;
+REAL: [+-]?[0-9]+'.'[0-9]* ;
 MULD: [*/];
 PLUSM: [+-];
 ID : [a-zA-Z]+ ;

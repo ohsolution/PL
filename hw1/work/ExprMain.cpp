@@ -33,19 +33,12 @@ struct opr
     char op;
     int pri;
     bool lp,rp;
-
-    /*
-    void print()
-    {
-        cout << op << endl;
-        cout << pri << " " << lp <<" " << rp<< endl; 
-    }
-    */
 };
 
 class EvalListener : public ExprBaseListener {
 
 private:
+    
     int port= DEFAULT;
     
     /* ASSN SECTION */
@@ -61,34 +54,15 @@ private:
 
 public:
     
+	virtual void enterExpr(ExprParser::ExprContext *ctx) {openport(EXPRPORT);}
 
-	virtual void enterProg(ExprParser::ProgContext *ctx) {
-		cout << "enterProg: \n";
-	}
-	virtual void exitProg(ExprParser::ProgContext *ctx) {
-		cout << "exitProg: \n";
-	}
-	virtual void enterExpr(ExprParser::ExprContext *ctx) {
-        openport(EXPRPORT);
-		cout << "\tenterExpr: \n";
-	}
-	virtual void exitExpr(ExprParser::ExprContext *ctx) {
-		cout << "\texitExpr: \n";
-	}
+    virtual void enterAssn(ExprParser::AssnContext *ctx) { openport(ASSNPORT); }
+    
+    virtual void exitAssn(ExprParser::AssnContext *ctx){ xhash[lid] = rval;}
 
-    virtual void enterAssn(ExprParser::AssnContext *ctx)
+	virtual void visitTerminal(tree::TerminalNode *node) 
     {
-        cout << "\tenterAssn: \n";
-        openport(ASSNPORT);
-    }
-
-    virtual void exitAssn(ExprParser::AssnContext *ctx)
-    {
-        xhash[lid] = rval;
-    }
-
-	virtual void visitTerminal(tree::TerminalNode *node) {
-		cout << "\t\tTerminal: " << node->getText() << "\n";
+        //cout<< node->getText()<<endl;
 
         int st = node->getSymbol()->getType();
         
@@ -170,7 +144,6 @@ public:
 
             if(!cur.isop)
             {
-                cout << "el : " << cur.val << endl;
                 vd.push_back(cur.val);
                 continue;
             }            
@@ -199,9 +172,8 @@ public:
 
             vd.push_back(ret);
         }
-        
-        
-        printf("%.1lf",vd.back());
+                
+        printf("%.1lf\n",vd.back());
     }
 };
 
@@ -219,17 +191,19 @@ int main(int argc, const char* argv[])
 		exit(0);
 	}
 
-	cout << "---Expression Evaluation with ANTLR listener---\n";
 	ANTLRInputStream input(stream);
-	ExprLexer lexer(&input);
-	CommonTokenStream tokens(&lexer);
-	ExprParser parser(&tokens);	
-    //ParseTree *tree = parser.prog();
 
-    //cout << tree->toStringTree(&parser) << endl;
+	ExprLexer lexer(&input);
+
+	CommonTokenStream tokens(&lexer);
+
+	ExprParser parser(&tokens);	
 
     ParseTreeWalker walker;
+
 	EvalListener listener;	
+
 	walker.walk(&listener, parser.prog());
+
     return 0;
 }

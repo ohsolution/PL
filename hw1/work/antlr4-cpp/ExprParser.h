@@ -59,12 +59,12 @@ public:
   public:
     ExprContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    NumContext *num();
-    antlr4::tree::TerminalNode *ID();
     antlr4::tree::TerminalNode *LP();
     std::vector<ExprContext *> expr();
     ExprContext* expr(size_t i);
     antlr4::tree::TerminalNode *RP();
+    NumContext *num();
+    antlr4::tree::TerminalNode *ID();
     antlr4::tree::TerminalNode *MULD();
     antlr4::tree::TerminalNode *PLUSM();
 

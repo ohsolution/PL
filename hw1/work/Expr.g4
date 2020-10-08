@@ -17,8 +17,8 @@ num     :   INT
 
 // lexer rules
 NEWLINE	: [\r\n]+ ;
-INT	: '-'?[0-9]+ ;
-REAL: '-'?[0-9]+'.'[0-9]* ;
+INT	: [+-]?[0-9]+ ;
+REAL: [+-]?[0-9]+'.'[0-9]* ;
 MULD: [*/];
 PLUSM: [+-];
 ID : [a-zA-Z]+ ;

@@ -33,14 +33,6 @@ struct opr
     char op;
     int pri;
     bool lp,rp;
-
-    /*
-    void print()
-    {
-        cout << op << endl;
-        cout << pri << " " << lp <<" " << rp<< endl; 
-    }
-    */
 };
 
 class EvalListener : public ExprBaseListener {

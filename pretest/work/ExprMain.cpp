@@ -10,29 +10,6 @@ using namespace antlr4::tree;
 
 class EvalListener : public ExprBaseListener {
 public:
-	virtual void enterProg(ExprParser::ProgContext *ctx) {
-		cout << "enterProg: \n";
-	}
-	virtual void exitProg(ExprParser::ProgContext *ctx) {
-		cout << "exitProg: \n";
-	}
-	virtual void enterExpr(ExprParser::ExprContext *ctx) {
-		cout << "\tenterExpr: \n";
-	}
-	virtual void exitExpr(ExprParser::ExprContext *ctx) {
-		cout << "\texitExpr: \n";
-	}
-
-    virtual void enterAssn(ExprParser::AssnContext *ctx)
-    {
-        cout << "\tenterAssn: \n";
-    }
-
-    virtual void exitAssn(ExprParser::AssnContext *ctx)
-    {
-        cout << "\texitAssn: \n";
-    }
-
 	virtual void visitTerminal(tree::TerminalNode *node) {
 		cout << "\t\tTerminal: " << node->getText() << "\n";
 	}
@@ -55,8 +32,9 @@ int main(int argc, const char* argv[]) {
 	ExprLexer lexer(&input);
 	CommonTokenStream tokens(&lexer);
 	ExprParser parser(&tokens);	
-    ParseTree *tree = parser.prog();
-
+	
+    ParseTree *tree = parser.file();
+	
     //cout << tree->toStringTree(&parser) << endl;
 
     ParseTreeWalker walker;

@@ -16,17 +16,32 @@
 class  ExprBaseListener : public ExprListener {
 public:
 
-  virtual void enterProg(ExprParser::ProgContext * /*ctx*/) override { }
-  virtual void exitProg(ExprParser::ProgContext * /*ctx*/) override { }
+  virtual void enterFile(ExprParser::FileContext * /*ctx*/) override { }
+  virtual void exitFile(ExprParser::FileContext * /*ctx*/) override { }
 
-  virtual void enterExpr(ExprParser::ExprContext * /*ctx*/) override { }
-  virtual void exitExpr(ExprParser::ExprContext * /*ctx*/) override { }
+  virtual void enterPackageR(ExprParser::PackageRContext * /*ctx*/) override { }
+  virtual void exitPackageR(ExprParser::PackageRContext * /*ctx*/) override { }
 
-  virtual void enterAssn(ExprParser::AssnContext * /*ctx*/) override { }
-  virtual void exitAssn(ExprParser::AssnContext * /*ctx*/) override { }
+  virtual void enterImportL(ExprParser::ImportLContext * /*ctx*/) override { }
+  virtual void exitImportL(ExprParser::ImportLContext * /*ctx*/) override { }
 
-  virtual void enterNum(ExprParser::NumContext * /*ctx*/) override { }
-  virtual void exitNum(ExprParser::NumContext * /*ctx*/) override { }
+  virtual void enterImportR(ExprParser::ImportRContext * /*ctx*/) override { }
+  virtual void exitImportR(ExprParser::ImportRContext * /*ctx*/) override { }
+
+  virtual void enterEntryL(ExprParser::EntryLContext * /*ctx*/) override { }
+  virtual void exitEntryL(ExprParser::EntryLContext * /*ctx*/) override { }
+
+  virtual void enterEntryR(ExprParser::EntryRContext * /*ctx*/) override { }
+  virtual void exitEntryR(ExprParser::EntryRContext * /*ctx*/) override { }
+
+  virtual void enterPropertyD(ExprParser::PropertyDContext * /*ctx*/) override { }
+  virtual void exitPropertyD(ExprParser::PropertyDContext * /*ctx*/) override { }
+
+  virtual void enterIndentifier(ExprParser::IndentifierContext * /*ctx*/) override { }
+  virtual void exitIndentifier(ExprParser::IndentifierContext * /*ctx*/) override { }
+
+  virtual void enterTypef(ExprParser::TypefContext * /*ctx*/) override { }
+  virtual void exitTypef(ExprParser::TypefContext * /*ctx*/) override { }
 
 
   virtual void enterEveryRule(antlr4::ParserRuleContext * /*ctx*/) override { }

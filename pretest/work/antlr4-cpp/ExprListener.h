@@ -14,17 +14,32 @@
 class  ExprListener : public antlr4::tree::ParseTreeListener {
 public:
 
-  virtual void enterProg(ExprParser::ProgContext *ctx) = 0;
-  virtual void exitProg(ExprParser::ProgContext *ctx) = 0;
+  virtual void enterFile(ExprParser::FileContext *ctx) = 0;
+  virtual void exitFile(ExprParser::FileContext *ctx) = 0;
 
-  virtual void enterExpr(ExprParser::ExprContext *ctx) = 0;
-  virtual void exitExpr(ExprParser::ExprContext *ctx) = 0;
+  virtual void enterPackageR(ExprParser::PackageRContext *ctx) = 0;
+  virtual void exitPackageR(ExprParser::PackageRContext *ctx) = 0;
 
-  virtual void enterAssn(ExprParser::AssnContext *ctx) = 0;
-  virtual void exitAssn(ExprParser::AssnContext *ctx) = 0;
+  virtual void enterImportL(ExprParser::ImportLContext *ctx) = 0;
+  virtual void exitImportL(ExprParser::ImportLContext *ctx) = 0;
 
-  virtual void enterNum(ExprParser::NumContext *ctx) = 0;
-  virtual void exitNum(ExprParser::NumContext *ctx) = 0;
+  virtual void enterImportR(ExprParser::ImportRContext *ctx) = 0;
+  virtual void exitImportR(ExprParser::ImportRContext *ctx) = 0;
+
+  virtual void enterEntryL(ExprParser::EntryLContext *ctx) = 0;
+  virtual void exitEntryL(ExprParser::EntryLContext *ctx) = 0;
+
+  virtual void enterEntryR(ExprParser::EntryRContext *ctx) = 0;
+  virtual void exitEntryR(ExprParser::EntryRContext *ctx) = 0;
+
+  virtual void enterPropertyD(ExprParser::PropertyDContext *ctx) = 0;
+  virtual void exitPropertyD(ExprParser::PropertyDContext *ctx) = 0;
+
+  virtual void enterIndentifier(ExprParser::IndentifierContext *ctx) = 0;
+  virtual void exitIndentifier(ExprParser::IndentifierContext *ctx) = 0;
+
+  virtual void enterTypef(ExprParser::TypefContext *ctx) = 0;
+  virtual void exitTypef(ExprParser::TypefContext *ctx) = 0;
 
 
 };

@@ -5,7 +5,7 @@ grammar Expr;
 
 
 file    
-        : NL? packageR? importL? topL? NL? // main { statement* }
+        : NL? packageR? importL? outerL? NL? // main { statement* }
         ;
 
 packageR 
@@ -20,11 +20,11 @@ importR
         : IMPORT ID (DOT MUL | DOT ID)* SEMI? NL? 
         ;
 
-topL
-        : (topR)+     
+outerL
+        : (outerR)+     
         ;
 
-topR
+outerR
         : functionD
         | propertyD  
         ;
@@ -43,7 +43,7 @@ whichfunction
         ;
 
 innerblock
-        : (statement*)
+        : (statement)*
         ;
 
 statement
@@ -58,7 +58,7 @@ expression
         :         
 
 propertyD
-        : (VAL|VAR) ID (COLON typef)? EQ value SEMI? NL?
+        : (VAL|VAR) ID (COLON typef)?  EQ value SEMI? NL?
         ;
 
 typef

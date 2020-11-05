@@ -53,8 +53,8 @@ ExprParser::ImportLContext* ExprParser::FileContext::importL() {
   return getRuleContext<ExprParser::ImportLContext>(0);
 }
 
-ExprParser::TopLContext* ExprParser::FileContext::topL() {
-  return getRuleContext<ExprParser::TopLContext>(0);
+ExprParser::EntryLContext* ExprParser::FileContext::entryL() {
+  return getRuleContext<ExprParser::EntryLContext>(0);
 }
 
 
@@ -122,7 +122,7 @@ ExprParser::FileContext* ExprParser::file() {
 
     || _la == ExprParser::VAR) {
       setState(27);
-      topL();
+      entryL();
     }
     setState(31);
     _errHandler->sync(this);
@@ -153,12 +153,12 @@ tree::TerminalNode* ExprParser::PackageRContext::PACKAGE() {
   return getToken(ExprParser::PACKAGE, 0);
 }
 
-std::vector<tree::TerminalNode *> ExprParser::PackageRContext::ID() {
-  return getTokens(ExprParser::ID);
+std::vector<tree::TerminalNode *> ExprParser::PackageRContext::STR() {
+  return getTokens(ExprParser::STR);
 }
 
-tree::TerminalNode* ExprParser::PackageRContext::ID(size_t i) {
-  return getToken(ExprParser::ID, i);
+tree::TerminalNode* ExprParser::PackageRContext::STR(size_t i) {
+  return getToken(ExprParser::STR, i);
 }
 
 std::vector<tree::TerminalNode *> ExprParser::PackageRContext::DOT() {
@@ -207,7 +207,7 @@ ExprParser::PackageRContext* ExprParser::packageR() {
     setState(33);
     match(ExprParser::PACKAGE);
     setState(34);
-    match(ExprParser::ID);
+    match(ExprParser::STR);
     setState(39);
     _errHandler->sync(this);
     _la = _input->LA(1);
@@ -215,7 +215,7 @@ ExprParser::PackageRContext* ExprParser::packageR() {
       setState(35);
       match(ExprParser::DOT);
       setState(36);
-      match(ExprParser::ID);
+      match(ExprParser::STR);
       setState(41);
       _errHandler->sync(this);
       _la = _input->LA(1);
@@ -322,12 +322,12 @@ tree::TerminalNode* ExprParser::ImportRContext::IMPORT() {
   return getToken(ExprParser::IMPORT, 0);
 }
 
-std::vector<tree::TerminalNode *> ExprParser::ImportRContext::ID() {
-  return getTokens(ExprParser::ID);
+std::vector<tree::TerminalNode *> ExprParser::ImportRContext::STR() {
+  return getTokens(ExprParser::STR);
 }
 
-tree::TerminalNode* ExprParser::ImportRContext::ID(size_t i) {
-  return getToken(ExprParser::ID, i);
+tree::TerminalNode* ExprParser::ImportRContext::STR(size_t i) {
+  return getToken(ExprParser::STR, i);
 }
 
 std::vector<tree::TerminalNode *> ExprParser::ImportRContext::DOT() {
@@ -384,7 +384,7 @@ ExprParser::ImportRContext* ExprParser::importR() {
     setState(54);
     match(ExprParser::IMPORT);
     setState(55);
-    match(ExprParser::ID);
+    match(ExprParser::STR);
     setState(62);
     _errHandler->sync(this);
     _la = _input->LA(1);
@@ -404,7 +404,7 @@ ExprParser::ImportRContext* ExprParser::importR() {
         setState(58);
         match(ExprParser::DOT);
         setState(59);
-        match(ExprParser::ID);
+        match(ExprParser::STR);
         break;
       }
 
@@ -443,40 +443,40 @@ ExprParser::ImportRContext* ExprParser::importR() {
   return _localctx;
 }
 
-//----------------- TopLContext ------------------------------------------------------------------
+//----------------- EntryLContext ------------------------------------------------------------------
 
-ExprParser::TopLContext::TopLContext(ParserRuleContext *parent, size_t invokingState)
+ExprParser::EntryLContext::EntryLContext(ParserRuleContext *parent, size_t invokingState)
   : ParserRuleContext(parent, invokingState) {
 }
 
-std::vector<ExprParser::TopRContext *> ExprParser::TopLContext::topR() {
-  return getRuleContexts<ExprParser::TopRContext>();
+std::vector<ExprParser::EntryRContext *> ExprParser::EntryLContext::entryR() {
+  return getRuleContexts<ExprParser::EntryRContext>();
 }
 
-ExprParser::TopRContext* ExprParser::TopLContext::topR(size_t i) {
-  return getRuleContext<ExprParser::TopRContext>(i);
+ExprParser::EntryRContext* ExprParser::EntryLContext::entryR(size_t i) {
+  return getRuleContext<ExprParser::EntryRContext>(i);
 }
 
 
-size_t ExprParser::TopLContext::getRuleIndex() const {
-  return ExprParser::RuleTopL;
+size_t ExprParser::EntryLContext::getRuleIndex() const {
+  return ExprParser::RuleEntryL;
 }
 
-void ExprParser::TopLContext::enterRule(tree::ParseTreeListener *listener) {
+void ExprParser::EntryLContext::enterRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<ExprListener *>(listener);
   if (parserListener != nullptr)
-    parserListener->enterTopL(this);
+    parserListener->enterEntryL(this);
 }
 
-void ExprParser::TopLContext::exitRule(tree::ParseTreeListener *listener) {
+void ExprParser::EntryLContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<ExprListener *>(listener);
   if (parserListener != nullptr)
-    parserListener->exitTopL(this);
+    parserListener->exitEntryL(this);
 }
 
-ExprParser::TopLContext* ExprParser::topL() {
-  TopLContext *_localctx = _tracker.createInstance<TopLContext>(_ctx, getState());
-  enterRule(_localctx, 8, ExprParser::RuleTopL);
+ExprParser::EntryLContext* ExprParser::entryL() {
+  EntryLContext *_localctx = _tracker.createInstance<EntryLContext>(_ctx, getState());
+  enterRule(_localctx, 8, ExprParser::RuleEntryL);
   size_t _la = 0;
 
   auto onExit = finally([=] {
@@ -489,7 +489,7 @@ ExprParser::TopLContext* ExprParser::topL() {
     _la = _input->LA(1);
     do {
       setState(71);
-      topR();
+      entryR();
       setState(74); 
       _errHandler->sync(this);
       _la = _input->LA(1);
@@ -507,36 +507,36 @@ ExprParser::TopLContext* ExprParser::topL() {
   return _localctx;
 }
 
-//----------------- TopRContext ------------------------------------------------------------------
+//----------------- EntryRContext ------------------------------------------------------------------
 
-ExprParser::TopRContext::TopRContext(ParserRuleContext *parent, size_t invokingState)
+ExprParser::EntryRContext::EntryRContext(ParserRuleContext *parent, size_t invokingState)
   : ParserRuleContext(parent, invokingState) {
 }
 
-ExprParser::PropertyDContext* ExprParser::TopRContext::propertyD() {
+ExprParser::PropertyDContext* ExprParser::EntryRContext::propertyD() {
   return getRuleContext<ExprParser::PropertyDContext>(0);
 }
 
 
-size_t ExprParser::TopRContext::getRuleIndex() const {
-  return ExprParser::RuleTopR;
+size_t ExprParser::EntryRContext::getRuleIndex() const {
+  return ExprParser::RuleEntryR;
 }
 
-void ExprParser::TopRContext::enterRule(tree::ParseTreeListener *listener) {
+void ExprParser::EntryRContext::enterRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<ExprListener *>(listener);
   if (parserListener != nullptr)
-    parserListener->enterTopR(this);
+    parserListener->enterEntryR(this);
 }
 
-void ExprParser::TopRContext::exitRule(tree::ParseTreeListener *listener) {
+void ExprParser::EntryRContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<ExprListener *>(listener);
   if (parserListener != nullptr)
-    parserListener->exitTopR(this);
+    parserListener->exitEntryR(this);
 }
 
-ExprParser::TopRContext* ExprParser::topR() {
-  TopRContext *_localctx = _tracker.createInstance<TopRContext>(_ctx, getState());
-  enterRule(_localctx, 10, ExprParser::RuleTopR);
+ExprParser::EntryRContext* ExprParser::entryR() {
+  EntryRContext *_localctx = _tracker.createInstance<EntryRContext>(_ctx, getState());
+  enterRule(_localctx, 10, ExprParser::RuleEntryR);
 
   auto onExit = finally([=] {
     exitRule();
@@ -562,16 +562,24 @@ ExprParser::PropertyDContext::PropertyDContext(ParserRuleContext *parent, size_t
   : ParserRuleContext(parent, invokingState) {
 }
 
-tree::TerminalNode* ExprParser::PropertyDContext::ID() {
-  return getToken(ExprParser::ID, 0);
+ExprParser::IndentifierContext* ExprParser::PropertyDContext::indentifier() {
+  return getRuleContext<ExprParser::IndentifierContext>(0);
+}
+
+tree::TerminalNode* ExprParser::PropertyDContext::COLON() {
+  return getToken(ExprParser::COLON, 0);
+}
+
+tree::TerminalNode* ExprParser::PropertyDContext::INT() {
+  return getToken(ExprParser::INT, 0);
 }
 
 tree::TerminalNode* ExprParser::PropertyDContext::EQ() {
   return getToken(ExprParser::EQ, 0);
 }
 
-ExprParser::ValueContext* ExprParser::PropertyDContext::value() {
-  return getRuleContext<ExprParser::ValueContext>(0);
+tree::TerminalNode* ExprParser::PropertyDContext::STR() {
+  return getToken(ExprParser::STR, 0);
 }
 
 tree::TerminalNode* ExprParser::PropertyDContext::VAL() {
@@ -580,14 +588,6 @@ tree::TerminalNode* ExprParser::PropertyDContext::VAL() {
 
 tree::TerminalNode* ExprParser::PropertyDContext::VAR() {
   return getToken(ExprParser::VAR, 0);
-}
-
-tree::TerminalNode* ExprParser::PropertyDContext::COLON() {
-  return getToken(ExprParser::COLON, 0);
-}
-
-ExprParser::TypefContext* ExprParser::PropertyDContext::typef() {
-  return getRuleContext<ExprParser::TypefContext>(0);
 }
 
 tree::TerminalNode* ExprParser::PropertyDContext::SEMI() {
@@ -637,40 +637,83 @@ ExprParser::PropertyDContext* ExprParser::propertyD() {
       consume();
     }
     setState(79);
-    match(ExprParser::ID);
+    indentifier();
+    setState(80);
+    match(ExprParser::COLON);
+    setState(81);
+    match(ExprParser::INT);
     setState(82);
-    _errHandler->sync(this);
-
-    _la = _input->LA(1);
-    if (_la == ExprParser::COLON) {
-      setState(80);
-      match(ExprParser::COLON);
-      setState(81);
-      typef();
-    }
-    setState(84);
     match(ExprParser::EQ);
+    setState(83);
+    match(ExprParser::STR);
     setState(85);
-    value();
-    setState(87);
     _errHandler->sync(this);
 
     _la = _input->LA(1);
     if (_la == ExprParser::SEMI) {
-      setState(86);
+      setState(84);
       match(ExprParser::SEMI);
     }
-    setState(90);
+    setState(88);
     _errHandler->sync(this);
 
-    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 16, _ctx)) {
+    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 15, _ctx)) {
     case 1: {
-      setState(89);
+      setState(87);
       match(ExprParser::NL);
       break;
     }
 
     }
+   
+  }
+  catch (RecognitionException &e) {
+    _errHandler->reportError(this, e);
+    _localctx->exception = std::current_exception();
+    _errHandler->recover(this, _localctx->exception);
+  }
+
+  return _localctx;
+}
+
+//----------------- IndentifierContext ------------------------------------------------------------------
+
+ExprParser::IndentifierContext::IndentifierContext(ParserRuleContext *parent, size_t invokingState)
+  : ParserRuleContext(parent, invokingState) {
+}
+
+tree::TerminalNode* ExprParser::IndentifierContext::ID() {
+  return getToken(ExprParser::ID, 0);
+}
+
+
+size_t ExprParser::IndentifierContext::getRuleIndex() const {
+  return ExprParser::RuleIndentifier;
+}
+
+void ExprParser::IndentifierContext::enterRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<ExprListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->enterIndentifier(this);
+}
+
+void ExprParser::IndentifierContext::exitRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<ExprListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->exitIndentifier(this);
+}
+
+ExprParser::IndentifierContext* ExprParser::indentifier() {
+  IndentifierContext *_localctx = _tracker.createInstance<IndentifierContext>(_ctx, getState());
+  enterRule(_localctx, 14, ExprParser::RuleIndentifier);
+
+  auto onExit = finally([=] {
+    exitRule();
+  });
+  try {
+    enterOuterAlt(_localctx, 1);
+    setState(90);
+    match(ExprParser::ID);
    
   }
   catch (RecognitionException &e) {
@@ -692,10 +735,6 @@ tree::TerminalNode* ExprParser::TypefContext::INT() {
   return getToken(ExprParser::INT, 0);
 }
 
-tree::TerminalNode* ExprParser::TypefContext::REAL() {
-  return getToken(ExprParser::REAL, 0);
-}
-
 
 size_t ExprParser::TypefContext::getRuleIndex() const {
   return ExprParser::RuleTypef;
@@ -715,8 +754,7 @@ void ExprParser::TypefContext::exitRule(tree::ParseTreeListener *listener) {
 
 ExprParser::TypefContext* ExprParser::typef() {
   TypefContext *_localctx = _tracker.createInstance<TypefContext>(_ctx, getState());
-  enterRule(_localctx, 14, ExprParser::RuleTypef);
-  size_t _la = 0;
+  enterRule(_localctx, 16, ExprParser::RuleTypef);
 
   auto onExit = finally([=] {
     exitRule();
@@ -724,79 +762,7 @@ ExprParser::TypefContext* ExprParser::typef() {
   try {
     enterOuterAlt(_localctx, 1);
     setState(92);
-    _la = _input->LA(1);
-    if (!(_la == ExprParser::INT
-
-    || _la == ExprParser::REAL)) {
-    _errHandler->recoverInline(this);
-    }
-    else {
-      _errHandler->reportMatch(this);
-      consume();
-    }
-   
-  }
-  catch (RecognitionException &e) {
-    _errHandler->reportError(this, e);
-    _localctx->exception = std::current_exception();
-    _errHandler->recover(this, _localctx->exception);
-  }
-
-  return _localctx;
-}
-
-//----------------- ValueContext ------------------------------------------------------------------
-
-ExprParser::ValueContext::ValueContext(ParserRuleContext *parent, size_t invokingState)
-  : ParserRuleContext(parent, invokingState) {
-}
-
-tree::TerminalNode* ExprParser::ValueContext::STR() {
-  return getToken(ExprParser::STR, 0);
-}
-
-tree::TerminalNode* ExprParser::ValueContext::NUM() {
-  return getToken(ExprParser::NUM, 0);
-}
-
-
-size_t ExprParser::ValueContext::getRuleIndex() const {
-  return ExprParser::RuleValue;
-}
-
-void ExprParser::ValueContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<ExprListener *>(listener);
-  if (parserListener != nullptr)
-    parserListener->enterValue(this);
-}
-
-void ExprParser::ValueContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<ExprListener *>(listener);
-  if (parserListener != nullptr)
-    parserListener->exitValue(this);
-}
-
-ExprParser::ValueContext* ExprParser::value() {
-  ValueContext *_localctx = _tracker.createInstance<ValueContext>(_ctx, getState());
-  enterRule(_localctx, 16, ExprParser::RuleValue);
-  size_t _la = 0;
-
-  auto onExit = finally([=] {
-    exitRule();
-  });
-  try {
-    enterOuterAlt(_localctx, 1);
-    setState(94);
-    _la = _input->LA(1);
-    if (!(_la == ExprParser::STR
-
-    || _la == ExprParser::NUM)) {
-    _errHandler->recoverInline(this);
-    }
-    else {
-      _errHandler->reportMatch(this);
-      consume();
-    }
+    match(ExprParser::INT);
    
   }
   catch (RecognitionException &e) {
@@ -817,19 +783,18 @@ atn::ATN ExprParser::_atn;
 std::vector<uint16_t> ExprParser::_serializedATN;
 
 std::vector<std::string> ExprParser::_ruleNames = {
-  "file", "packageR", "importL", "importR", "topL", "topR", "propertyD", 
-  "typef", "value"
+  "file", "packageR", "importL", "importR", "entryL", "entryR", "propertyD", 
+  "indentifier", "typef"
 };
 
 std::vector<std::string> ExprParser::_literalNames = {
-  "", "", "';'", "'.'", "'*'", "'package'", "'import'", "'Int'", "'Double'", 
-  "':'", "'='", "'val'", "'var'"
+  "", "", "';'", "'package '", "'import '", "", "'.'", "'*'", "", "", "", 
+  "': '", "'Int'", "'= '", "'val '", "'var '"
 };
 
 std::vector<std::string> ExprParser::_symbolicNames = {
-  "", "NL", "SEMI", "DOT", "MUL", "PACKAGE", "IMPORT", "INT", "REAL", "COLON", 
-  "EQ", "VAL", "VAR", "STR", "ID", "NUM", "FN", "DIGIT", "WS", "COMMENT", 
-  "COMMENT2"
+  "", "NL", "SEMI", "PACKAGE", "IMPORT", "STR", "DOT", "MUL", "ID", "FN", 
+  "DIGIT", "COLON", "INT", "EQ", "VAL", "VAR", "WS", "COMMENT", "COMMENT2"
 };
 
 dfa::Vocabulary ExprParser::_vocabulary(_literalNames, _symbolicNames);
@@ -852,7 +817,7 @@ ExprParser::Initializer::Initializer() {
 
   _serializedATN = {
     0x3, 0x608b, 0xa72a, 0x8133, 0xb9ed, 0x417c, 0x3be7, 0x7786, 0x5964, 
-    0x3, 0x16, 0x63, 0x4, 0x2, 0x9, 0x2, 0x4, 0x3, 0x9, 0x3, 0x4, 0x4, 0x9, 
+    0x3, 0x14, 0x61, 0x4, 0x2, 0x9, 0x2, 0x4, 0x3, 0x9, 0x3, 0x4, 0x4, 0x9, 
     0x4, 0x4, 0x5, 0x9, 0x5, 0x4, 0x6, 0x9, 0x6, 0x4, 0x7, 0x9, 0x7, 0x4, 
     0x8, 0x9, 0x8, 0x4, 0x9, 0x9, 0x9, 0x4, 0xa, 0x9, 0xa, 0x3, 0x2, 0x5, 
     0x2, 0x16, 0xa, 0x2, 0x3, 0x2, 0x5, 0x2, 0x19, 0xa, 0x2, 0x3, 0x2, 0x5, 
@@ -865,15 +830,14 @@ ExprParser::Initializer::Initializer() {
     0x5, 0xe, 0x5, 0x42, 0xb, 0x5, 0x3, 0x5, 0x5, 0x5, 0x45, 0xa, 0x5, 0x3, 
     0x5, 0x5, 0x5, 0x48, 0xa, 0x5, 0x3, 0x6, 0x6, 0x6, 0x4b, 0xa, 0x6, 0xd, 
     0x6, 0xe, 0x6, 0x4c, 0x3, 0x7, 0x3, 0x7, 0x3, 0x8, 0x3, 0x8, 0x3, 0x8, 
-    0x3, 0x8, 0x5, 0x8, 0x55, 0xa, 0x8, 0x3, 0x8, 0x3, 0x8, 0x3, 0x8, 0x5, 
-    0x8, 0x5a, 0xa, 0x8, 0x3, 0x8, 0x5, 0x8, 0x5d, 0xa, 0x8, 0x3, 0x9, 0x3, 
-    0x9, 0x3, 0xa, 0x3, 0xa, 0x3, 0xa, 0x2, 0x2, 0xb, 0x2, 0x4, 0x6, 0x8, 
-    0xa, 0xc, 0xe, 0x10, 0x12, 0x2, 0x5, 0x3, 0x2, 0xd, 0xe, 0x3, 0x2, 0x9, 
-    0xa, 0x4, 0x2, 0xf, 0xf, 0x11, 0x11, 0x2, 0x6a, 0x2, 0x15, 0x3, 0x2, 
-    0x2, 0x2, 0x4, 0x23, 0x3, 0x2, 0x2, 0x2, 0x6, 0x35, 0x3, 0x2, 0x2, 0x2, 
-    0x8, 0x38, 0x3, 0x2, 0x2, 0x2, 0xa, 0x4a, 0x3, 0x2, 0x2, 0x2, 0xc, 0x4e, 
-    0x3, 0x2, 0x2, 0x2, 0xe, 0x50, 0x3, 0x2, 0x2, 0x2, 0x10, 0x5e, 0x3, 
-    0x2, 0x2, 0x2, 0x12, 0x60, 0x3, 0x2, 0x2, 0x2, 0x14, 0x16, 0x7, 0x3, 
+    0x3, 0x8, 0x3, 0x8, 0x3, 0x8, 0x3, 0x8, 0x5, 0x8, 0x58, 0xa, 0x8, 0x3, 
+    0x8, 0x5, 0x8, 0x5b, 0xa, 0x8, 0x3, 0x9, 0x3, 0x9, 0x3, 0xa, 0x3, 0xa, 
+    0x3, 0xa, 0x2, 0x2, 0xb, 0x2, 0x4, 0x6, 0x8, 0xa, 0xc, 0xe, 0x10, 0x12, 
+    0x2, 0x3, 0x3, 0x2, 0x10, 0x11, 0x2, 0x67, 0x2, 0x15, 0x3, 0x2, 0x2, 
+    0x2, 0x4, 0x23, 0x3, 0x2, 0x2, 0x2, 0x6, 0x35, 0x3, 0x2, 0x2, 0x2, 0x8, 
+    0x38, 0x3, 0x2, 0x2, 0x2, 0xa, 0x4a, 0x3, 0x2, 0x2, 0x2, 0xc, 0x4e, 
+    0x3, 0x2, 0x2, 0x2, 0xe, 0x50, 0x3, 0x2, 0x2, 0x2, 0x10, 0x5c, 0x3, 
+    0x2, 0x2, 0x2, 0x12, 0x5e, 0x3, 0x2, 0x2, 0x2, 0x14, 0x16, 0x7, 0x3, 
     0x2, 0x2, 0x15, 0x14, 0x3, 0x2, 0x2, 0x2, 0x15, 0x16, 0x3, 0x2, 0x2, 
     0x2, 0x16, 0x18, 0x3, 0x2, 0x2, 0x2, 0x17, 0x19, 0x5, 0x4, 0x3, 0x2, 
     0x18, 0x17, 0x3, 0x2, 0x2, 0x2, 0x18, 0x19, 0x3, 0x2, 0x2, 0x2, 0x19, 
@@ -883,8 +847,8 @@ ExprParser::Initializer::Initializer() {
     0x2, 0x2, 0x1e, 0x1f, 0x3, 0x2, 0x2, 0x2, 0x1f, 0x21, 0x3, 0x2, 0x2, 
     0x2, 0x20, 0x22, 0x7, 0x3, 0x2, 0x2, 0x21, 0x20, 0x3, 0x2, 0x2, 0x2, 
     0x21, 0x22, 0x3, 0x2, 0x2, 0x2, 0x22, 0x3, 0x3, 0x2, 0x2, 0x2, 0x23, 
-    0x24, 0x7, 0x7, 0x2, 0x2, 0x24, 0x29, 0x7, 0x10, 0x2, 0x2, 0x25, 0x26, 
-    0x7, 0x5, 0x2, 0x2, 0x26, 0x28, 0x7, 0x10, 0x2, 0x2, 0x27, 0x25, 0x3, 
+    0x24, 0x7, 0x5, 0x2, 0x2, 0x24, 0x29, 0x7, 0x7, 0x2, 0x2, 0x25, 0x26, 
+    0x7, 0x8, 0x2, 0x2, 0x26, 0x28, 0x7, 0x7, 0x2, 0x2, 0x27, 0x25, 0x3, 
     0x2, 0x2, 0x2, 0x28, 0x2b, 0x3, 0x2, 0x2, 0x2, 0x29, 0x27, 0x3, 0x2, 
     0x2, 0x2, 0x29, 0x2a, 0x3, 0x2, 0x2, 0x2, 0x2a, 0x2d, 0x3, 0x2, 0x2, 
     0x2, 0x2b, 0x29, 0x3, 0x2, 0x2, 0x2, 0x2c, 0x2e, 0x7, 0x4, 0x2, 0x2, 
@@ -894,10 +858,10 @@ ExprParser::Initializer::Initializer() {
     0x2, 0x2, 0x2, 0x32, 0x34, 0x5, 0x8, 0x5, 0x2, 0x33, 0x32, 0x3, 0x2, 
     0x2, 0x2, 0x34, 0x37, 0x3, 0x2, 0x2, 0x2, 0x35, 0x33, 0x3, 0x2, 0x2, 
     0x2, 0x35, 0x36, 0x3, 0x2, 0x2, 0x2, 0x36, 0x7, 0x3, 0x2, 0x2, 0x2, 
-    0x37, 0x35, 0x3, 0x2, 0x2, 0x2, 0x38, 0x39, 0x7, 0x8, 0x2, 0x2, 0x39, 
-    0x40, 0x7, 0x10, 0x2, 0x2, 0x3a, 0x3b, 0x7, 0x5, 0x2, 0x2, 0x3b, 0x3f, 
-    0x7, 0x6, 0x2, 0x2, 0x3c, 0x3d, 0x7, 0x5, 0x2, 0x2, 0x3d, 0x3f, 0x7, 
-    0x10, 0x2, 0x2, 0x3e, 0x3a, 0x3, 0x2, 0x2, 0x2, 0x3e, 0x3c, 0x3, 0x2, 
+    0x37, 0x35, 0x3, 0x2, 0x2, 0x2, 0x38, 0x39, 0x7, 0x6, 0x2, 0x2, 0x39, 
+    0x40, 0x7, 0x7, 0x2, 0x2, 0x3a, 0x3b, 0x7, 0x8, 0x2, 0x2, 0x3b, 0x3f, 
+    0x7, 0x9, 0x2, 0x2, 0x3c, 0x3d, 0x7, 0x8, 0x2, 0x2, 0x3d, 0x3f, 0x7, 
+    0x7, 0x2, 0x2, 0x3e, 0x3a, 0x3, 0x2, 0x2, 0x2, 0x3e, 0x3c, 0x3, 0x2, 
     0x2, 0x2, 0x3f, 0x42, 0x3, 0x2, 0x2, 0x2, 0x40, 0x3e, 0x3, 0x2, 0x2, 
     0x2, 0x40, 0x41, 0x3, 0x2, 0x2, 0x2, 0x41, 0x44, 0x3, 0x2, 0x2, 0x2, 
     0x42, 0x40, 0x3, 0x2, 0x2, 0x2, 0x43, 0x45, 0x7, 0x4, 0x2, 0x2, 0x44, 
@@ -908,17 +872,16 @@ ExprParser::Initializer::Initializer() {
     0x2, 0x4b, 0x4c, 0x3, 0x2, 0x2, 0x2, 0x4c, 0x4a, 0x3, 0x2, 0x2, 0x2, 
     0x4c, 0x4d, 0x3, 0x2, 0x2, 0x2, 0x4d, 0xb, 0x3, 0x2, 0x2, 0x2, 0x4e, 
     0x4f, 0x5, 0xe, 0x8, 0x2, 0x4f, 0xd, 0x3, 0x2, 0x2, 0x2, 0x50, 0x51, 
-    0x9, 0x2, 0x2, 0x2, 0x51, 0x54, 0x7, 0x10, 0x2, 0x2, 0x52, 0x53, 0x7, 
-    0xb, 0x2, 0x2, 0x53, 0x55, 0x5, 0x10, 0x9, 0x2, 0x54, 0x52, 0x3, 0x2, 
-    0x2, 0x2, 0x54, 0x55, 0x3, 0x2, 0x2, 0x2, 0x55, 0x56, 0x3, 0x2, 0x2, 
-    0x2, 0x56, 0x57, 0x7, 0xc, 0x2, 0x2, 0x57, 0x59, 0x5, 0x12, 0xa, 0x2, 
-    0x58, 0x5a, 0x7, 0x4, 0x2, 0x2, 0x59, 0x58, 0x3, 0x2, 0x2, 0x2, 0x59, 
-    0x5a, 0x3, 0x2, 0x2, 0x2, 0x5a, 0x5c, 0x3, 0x2, 0x2, 0x2, 0x5b, 0x5d, 
-    0x7, 0x3, 0x2, 0x2, 0x5c, 0x5b, 0x3, 0x2, 0x2, 0x2, 0x5c, 0x5d, 0x3, 
-    0x2, 0x2, 0x2, 0x5d, 0xf, 0x3, 0x2, 0x2, 0x2, 0x5e, 0x5f, 0x9, 0x3, 
-    0x2, 0x2, 0x5f, 0x11, 0x3, 0x2, 0x2, 0x2, 0x60, 0x61, 0x9, 0x4, 0x2, 
-    0x2, 0x61, 0x13, 0x3, 0x2, 0x2, 0x2, 0x13, 0x15, 0x18, 0x1b, 0x1e, 0x21, 
-    0x29, 0x2d, 0x30, 0x35, 0x3e, 0x40, 0x44, 0x47, 0x4c, 0x54, 0x59, 0x5c, 
+    0x9, 0x2, 0x2, 0x2, 0x51, 0x52, 0x5, 0x10, 0x9, 0x2, 0x52, 0x53, 0x7, 
+    0xd, 0x2, 0x2, 0x53, 0x54, 0x7, 0xe, 0x2, 0x2, 0x54, 0x55, 0x7, 0xf, 
+    0x2, 0x2, 0x55, 0x57, 0x7, 0x7, 0x2, 0x2, 0x56, 0x58, 0x7, 0x4, 0x2, 
+    0x2, 0x57, 0x56, 0x3, 0x2, 0x2, 0x2, 0x57, 0x58, 0x3, 0x2, 0x2, 0x2, 
+    0x58, 0x5a, 0x3, 0x2, 0x2, 0x2, 0x59, 0x5b, 0x7, 0x3, 0x2, 0x2, 0x5a, 
+    0x59, 0x3, 0x2, 0x2, 0x2, 0x5a, 0x5b, 0x3, 0x2, 0x2, 0x2, 0x5b, 0xf, 
+    0x3, 0x2, 0x2, 0x2, 0x5c, 0x5d, 0x7, 0xa, 0x2, 0x2, 0x5d, 0x11, 0x3, 
+    0x2, 0x2, 0x2, 0x5e, 0x5f, 0x7, 0xe, 0x2, 0x2, 0x5f, 0x13, 0x3, 0x2, 
+    0x2, 0x2, 0x12, 0x15, 0x18, 0x1b, 0x1e, 0x21, 0x29, 0x2d, 0x30, 0x35, 
+    0x3e, 0x40, 0x44, 0x47, 0x4c, 0x57, 0x5a, 
   };
 
   atn::ATNDeserializer deserializer;

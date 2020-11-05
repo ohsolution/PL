@@ -26,20 +26,20 @@ public:
   virtual void enterImportR(ExprParser::ImportRContext *ctx) = 0;
   virtual void exitImportR(ExprParser::ImportRContext *ctx) = 0;
 
-  virtual void enterTopL(ExprParser::TopLContext *ctx) = 0;
-  virtual void exitTopL(ExprParser::TopLContext *ctx) = 0;
+  virtual void enterEntryL(ExprParser::EntryLContext *ctx) = 0;
+  virtual void exitEntryL(ExprParser::EntryLContext *ctx) = 0;
 
-  virtual void enterTopR(ExprParser::TopRContext *ctx) = 0;
-  virtual void exitTopR(ExprParser::TopRContext *ctx) = 0;
+  virtual void enterEntryR(ExprParser::EntryRContext *ctx) = 0;
+  virtual void exitEntryR(ExprParser::EntryRContext *ctx) = 0;
 
   virtual void enterPropertyD(ExprParser::PropertyDContext *ctx) = 0;
   virtual void exitPropertyD(ExprParser::PropertyDContext *ctx) = 0;
 
+  virtual void enterIndentifier(ExprParser::IndentifierContext *ctx) = 0;
+  virtual void exitIndentifier(ExprParser::IndentifierContext *ctx) = 0;
+
   virtual void enterTypef(ExprParser::TypefContext *ctx) = 0;
   virtual void exitTypef(ExprParser::TypefContext *ctx) = 0;
-
-  virtual void enterValue(ExprParser::ValueContext *ctx) = 0;
-  virtual void exitValue(ExprParser::ValueContext *ctx) = 0;
 
 
 };

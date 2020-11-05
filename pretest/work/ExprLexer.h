@@ -12,9 +12,9 @@
 class  ExprLexer : public antlr4::Lexer {
 public:
   enum {
-    NL = 1, SEMI = 2, DOT = 3, MUL = 4, PACKAGE = 5, IMPORT = 6, INT = 7, 
-    REAL = 8, COLON = 9, EQ = 10, VAL = 11, VAR = 12, STR = 13, ID = 14, 
-    NUM = 15, FN = 16, DIGIT = 17, WS = 18, COMMENT = 19, COMMENT2 = 20
+    NL = 1, SEMI = 2, PACKAGE = 3, IMPORT = 4, STR = 5, DOT = 6, MUL = 7, 
+    ID = 8, FN = 9, DIGIT = 10, COLON = 11, INT = 12, EQ = 13, VAL = 14, 
+    VAR = 15, WS = 16, COMMENT = 17, COMMENT2 = 18
   };
 
   ExprLexer(antlr4::CharStream *input);

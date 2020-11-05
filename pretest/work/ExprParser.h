@@ -12,14 +12,14 @@
 class  ExprParser : public antlr4::Parser {
 public:
   enum {
-    NL = 1, SEMI = 2, DOT = 3, MUL = 4, PACKAGE = 5, IMPORT = 6, INT = 7, 
-    REAL = 8, COLON = 9, EQ = 10, VAL = 11, VAR = 12, STR = 13, ID = 14, 
-    NUM = 15, FN = 16, DIGIT = 17, WS = 18, COMMENT = 19, COMMENT2 = 20
+    NL = 1, SEMI = 2, PACKAGE = 3, IMPORT = 4, STR = 5, DOT = 6, MUL = 7, 
+    ID = 8, FN = 9, DIGIT = 10, COLON = 11, INT = 12, EQ = 13, VAL = 14, 
+    VAR = 15, WS = 16, COMMENT = 17, COMMENT2 = 18
   };
 
   enum {
-    RuleFile = 0, RulePackageR = 1, RuleImportL = 2, RuleImportR = 3, RuleTopL = 4, 
-    RuleTopR = 5, RulePropertyD = 6, RuleTypef = 7, RuleValue = 8
+    RuleFile = 0, RulePackageR = 1, RuleImportL = 2, RuleImportR = 3, RuleEntryL = 4, 
+    RuleEntryR = 5, RulePropertyD = 6, RuleIndentifier = 7, RuleTypef = 8
   };
 
   ExprParser(antlr4::TokenStream *input);
@@ -36,11 +36,11 @@ public:
   class PackageRContext;
   class ImportLContext;
   class ImportRContext;
-  class TopLContext;
-  class TopRContext;
+  class EntryLContext;
+  class EntryRContext;
   class PropertyDContext;
-  class TypefContext;
-  class ValueContext; 
+  class IndentifierContext;
+  class TypefContext; 
 
   class  FileContext : public antlr4::ParserRuleContext {
   public:
@@ -50,7 +50,7 @@ public:
     antlr4::tree::TerminalNode* NL(size_t i);
     PackageRContext *packageR();
     ImportLContext *importL();
-    TopLContext *topL();
+    EntryLContext *entryL();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -64,8 +64,8 @@ public:
     PackageRContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *PACKAGE();
-    std::vector<antlr4::tree::TerminalNode *> ID();
-    antlr4::tree::TerminalNode* ID(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> STR();
+    antlr4::tree::TerminalNode* STR(size_t i);
     std::vector<antlr4::tree::TerminalNode *> DOT();
     antlr4::tree::TerminalNode* DOT(size_t i);
     antlr4::tree::TerminalNode *SEMI();
@@ -97,8 +97,8 @@ public:
     ImportRContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *IMPORT();
-    std::vector<antlr4::tree::TerminalNode *> ID();
-    antlr4::tree::TerminalNode* ID(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> STR();
+    antlr4::tree::TerminalNode* STR(size_t i);
     std::vector<antlr4::tree::TerminalNode *> DOT();
     antlr4::tree::TerminalNode* DOT(size_t i);
     std::vector<antlr4::tree::TerminalNode *> MUL();
@@ -113,23 +113,23 @@ public:
 
   ImportRContext* importR();
 
-  class  TopLContext : public antlr4::ParserRuleContext {
+  class  EntryLContext : public antlr4::ParserRuleContext {
   public:
-    TopLContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    EntryLContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    std::vector<TopRContext *> topR();
-    TopRContext* topR(size_t i);
+    std::vector<EntryRContext *> entryR();
+    EntryRContext* entryR(size_t i);
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
    
   };
 
-  TopLContext* topL();
+  EntryLContext* entryL();
 
-  class  TopRContext : public antlr4::ParserRuleContext {
+  class  EntryRContext : public antlr4::ParserRuleContext {
   public:
-    TopRContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    EntryRContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     PropertyDContext *propertyD();
 
@@ -138,19 +138,19 @@ public:
    
   };
 
-  TopRContext* topR();
+  EntryRContext* entryR();
 
   class  PropertyDContext : public antlr4::ParserRuleContext {
   public:
     PropertyDContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    antlr4::tree::TerminalNode *ID();
+    IndentifierContext *indentifier();
+    antlr4::tree::TerminalNode *COLON();
+    antlr4::tree::TerminalNode *INT();
     antlr4::tree::TerminalNode *EQ();
-    ValueContext *value();
+    antlr4::tree::TerminalNode *STR();
     antlr4::tree::TerminalNode *VAL();
     antlr4::tree::TerminalNode *VAR();
-    antlr4::tree::TerminalNode *COLON();
-    TypefContext *typef();
     antlr4::tree::TerminalNode *SEMI();
     antlr4::tree::TerminalNode *NL();
 
@@ -161,12 +161,24 @@ public:
 
   PropertyDContext* propertyD();
 
+  class  IndentifierContext : public antlr4::ParserRuleContext {
+  public:
+    IndentifierContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *ID();
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+   
+  };
+
+  IndentifierContext* indentifier();
+
   class  TypefContext : public antlr4::ParserRuleContext {
   public:
     TypefContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *INT();
-    antlr4::tree::TerminalNode *REAL();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -174,20 +186,6 @@ public:
   };
 
   TypefContext* typef();
-
-  class  ValueContext : public antlr4::ParserRuleContext {
-  public:
-    ValueContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-    virtual size_t getRuleIndex() const override;
-    antlr4::tree::TerminalNode *STR();
-    antlr4::tree::TerminalNode *NUM();
-
-    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
-    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
-   
-  };
-
-  ValueContext* value();
 
 
 private:

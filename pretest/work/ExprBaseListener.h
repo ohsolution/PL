@@ -28,20 +28,20 @@ public:
   virtual void enterImportR(ExprParser::ImportRContext * /*ctx*/) override { }
   virtual void exitImportR(ExprParser::ImportRContext * /*ctx*/) override { }
 
-  virtual void enterTopL(ExprParser::TopLContext * /*ctx*/) override { }
-  virtual void exitTopL(ExprParser::TopLContext * /*ctx*/) override { }
+  virtual void enterEntryL(ExprParser::EntryLContext * /*ctx*/) override { }
+  virtual void exitEntryL(ExprParser::EntryLContext * /*ctx*/) override { }
 
-  virtual void enterTopR(ExprParser::TopRContext * /*ctx*/) override { }
-  virtual void exitTopR(ExprParser::TopRContext * /*ctx*/) override { }
+  virtual void enterEntryR(ExprParser::EntryRContext * /*ctx*/) override { }
+  virtual void exitEntryR(ExprParser::EntryRContext * /*ctx*/) override { }
 
   virtual void enterPropertyD(ExprParser::PropertyDContext * /*ctx*/) override { }
   virtual void exitPropertyD(ExprParser::PropertyDContext * /*ctx*/) override { }
 
+  virtual void enterIndentifier(ExprParser::IndentifierContext * /*ctx*/) override { }
+  virtual void exitIndentifier(ExprParser::IndentifierContext * /*ctx*/) override { }
+
   virtual void enterTypef(ExprParser::TypefContext * /*ctx*/) override { }
   virtual void exitTypef(ExprParser::TypefContext * /*ctx*/) override { }
-
-  virtual void enterValue(ExprParser::ValueContext * /*ctx*/) override { }
-  virtual void exitValue(ExprParser::ValueContext * /*ctx*/) override { }
 
 
   virtual void enterEveryRule(antlr4::ParserRuleContext * /*ctx*/) override { }

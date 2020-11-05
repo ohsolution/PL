@@ -5,11 +5,11 @@ grammar Expr;
 
 
 file    
-        : NL? packageR? importL? entryL? NL? // main { statement* }
+        : NL? packageR? importL? topL? NL? // main { statement* }
         ;
 
 packageR 
-        : PACKAGE STR (DOT STR)* SEMI? NL?
+        : PACKAGE ID (DOT ID)* SEMI? NL?
         ;
 
 importL 
@@ -17,59 +17,98 @@ importL
         ;
 
 importR
-        : IMPORT STR (DOT MUL | DOT STR)* SEMI? NL? 
+        : IMPORT ID (DOT MUL | DOT ID)* SEMI? NL? 
         ;
 
-entryL
-        : (entryR)+     
+topL
+        : (topR)+     
         ;
 
-entryR
-        : propertyD //| Dfunction
+topR
+        : functionD
+        | propertyD  
         ;
+
+functionD
+        : FUN ID argument whichfunction SEMI? NL?
+        ;
+
+argument
+        : LPAR (ID COLON typef COMMA?)* RPAR
+        ;
+
+whichfunction
+        : EQ expression
+        | COLON typef? LB innerblock RB 
+        ;
+
+innerblock
+        : (statement*)
+        ;
+
+statement
+        : variableD
+        : functionD
+        : expression
+        //: 
+        //: 
+        ;
+
+expression
+        :         
 
 propertyD
-        : (VAL|VAR) indentifier (COLON typef)? EQ STR SEMI? NL?
-        ;
-
-indentifier
-        : ID
+        : (VAL|VAR) ID (COLON typef)? EQ value SEMI? NL?
         ;
 
 typef
         : INT
+        | REAL
+        | STRING
+        | UNIT
         ;
+
+value 
+        : STR
+        | NUM
+        ;
+
 
 // lexer rules
 
 NL : [\r\n]+;
 SEMI : ';';
-
-STR : ~[\r\n.; ]+;
-PACKAGE : 'package ';
-IMPORT : 'import ';
 DOT : '.';
+COMMA : ',';
 MUL : '*';
+LPAR : '(';
+RPAR : ')';
+LB : '{';
+RB : '}';
+COLON : ':';
+EQ : '=';
 
+PACKAGE : 'package';
+IMPORT : 'import';
+INT : 'Int';
+REAL : 'Double';
+STRING : 'String';
+UNIT : 'Unit';
+VAL : 'val';
+VAR : 'var';
 
-VAL : 'val ';
-VAR : 'var ';
+FUN : 'fun';
+RET : 'return';
 
-
-DIGIT : [0-9];
-FN : [a-zA-Z_];
-
-
+STR : '"' ~[\r\n]* '"';
 ID : FN ( FN | DIGIT )*;
+NUM : '-'?DIGIT+DOT?DIGIT*;
+FN : [a-zA-Z_];
+DIGIT : [0-9];
 
-
-COLON : ': ';
-INT : 'Int ';
-EQ : '= ';
 
 WS 
-        : [ \t\r\n]+
-                -> skip
+        : [ \t\r\n]+ -> skip
         ;
 COMMENT 
         : '//' ~[\r\n]* -> skip

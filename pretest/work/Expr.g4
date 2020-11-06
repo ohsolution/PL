@@ -25,10 +25,11 @@ outerL
         ;
 
 outerR
-        : functionD
-        | propertyD  
+        //: functionD
+        : propertyD  
         ;
 
+/*
 functionD
         : FUN ID argument whichfunction SEMI? NL?
         ;
@@ -41,6 +42,7 @@ whichfunction
         : EQ expression
         | COLON typef? LB innerblock RB 
         ;
+ 
 
 innerblock
         : (statement)*
@@ -56,6 +58,8 @@ statement
 
 expression
         :         
+        ;
+*/
 
 propertyD
         : (VAL|VAR) ID (COLON typef)?  EQ value SEMI? NL?

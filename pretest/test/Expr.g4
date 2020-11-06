@@ -38,12 +38,12 @@ argument
         ;
 
 whichfunction
-        : assign expression
+        : assign
         | (COLON typef? QUERY?)? LB innerblock RB 
         ;
 
-assign
-        : ID assignopr
+assign  
+        : assignopr expression
         ;
 
 assignopr
@@ -60,17 +60,23 @@ innerblock
         ;
 
 statement
-        : variableD
-        | functionD
-        | expression
+        : variableD SEMI?
+        | functionD SEMI?
+        | expression SEMI?
+        | exit SEMI?
+        | ID assign SEMI?
         //| forloop 
         //| whileloop
         //| ifthenelse 
         ;
 
+exit
+        : RETC expression
+        ; 
+
 expression
         : expor 
-        | LPAR expor RPAR       
+        //| LPAR expor RPAR       
         ;
 
 expor
@@ -89,7 +95,7 @@ expcmp
         ;
 
 exppre
-        : expR ((inopr expR)|(isopr typef))
+        : expR ((inopr expR)|(isopr typef))*
         ;
 
 expR
@@ -105,14 +111,15 @@ expmul
         ;
 
 prefixexp
-        : prefixopr exppostfix
+        : prefixopr? exppostfix
         ;
 
 exppostfix
-        : ID oprpostfix
-        | LPAR exppostfix RPAR
-        | LSQ exppostfix RSQ
-        | functioncall
+        : functioncall
+        | ID oprpostfix
+        | LPAR expression RPAR
+        | LSQ expression RSQ
+        | value
         ;
 
 functioncall
@@ -120,7 +127,7 @@ functioncall
         ;
 
 argu
-        : ((ID|expression) COMMA?)* 
+        : ((ID|value|expression) COMMA?)* 
         ;
 
 oprpostfix
@@ -177,7 +184,7 @@ variableD
 
 
 propertyD
-        : (VAL|VAR) ID (COLON typef)? ASN value SEMI? 
+        : (VAL|VAR) ID (COLON typef)? ASN expression SEMI? 
         ;
 
 typef
@@ -250,7 +257,7 @@ VAR : 'var';
 ANY : 'Any';
 
 FUN : 'fun';
-RET : 'return';
+RETC : 'return';
 
 STR : '"' ~[\r\n]* '"';
 ID : FN ( FN | DIGIT )*;

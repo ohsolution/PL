@@ -21,7 +21,7 @@ public class ExprLexer extends Lexer {
 		DOT=18, COMMA=19, LPAR=20, RPAR=21, LB=22, RB=23, LSQ=24, RSQ=25, COLON=26, 
 		QUERY=27, MUL=28, DIV=29, MOD=30, ASN=31, PULS=32, MINUS=33, IN=34, NIN=35, 
 		IS=36, NIS=37, PACKAGE=38, IMPORT=39, INT=40, REAL=41, STRING=42, UNIT=43, 
-		VAL=44, VAR=45, ANY=46, FUN=47, RET=48, STR=49, ID=50, NUM=51, FN=52, 
+		VAL=44, VAR=45, ANY=46, FUN=47, RETC=48, STR=49, ID=50, NUM=51, FN=52, 
 		DIGIT=53, WS=54, COMMENT=55, COMMENT2=56;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
@@ -38,7 +38,7 @@ public class ExprLexer extends Lexer {
 			"DOT", "COMMA", "LPAR", "RPAR", "LB", "RB", "LSQ", "RSQ", "COLON", "QUERY", 
 			"MUL", "DIV", "MOD", "ASN", "PULS", "MINUS", "IN", "NIN", "IS", "NIS", 
 			"PACKAGE", "IMPORT", "INT", "REAL", "STRING", "UNIT", "VAL", "VAR", "ANY", 
-			"FUN", "RET", "STR", "ID", "NUM", "FN", "DIGIT", "WS", "COMMENT", "COMMENT2"
+			"FUN", "RETC", "STR", "ID", "NUM", "FN", "DIGIT", "WS", "COMMENT", "COMMENT2"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -61,7 +61,7 @@ public class ExprLexer extends Lexer {
 			"LOGICOR", "DOT", "COMMA", "LPAR", "RPAR", "LB", "RB", "LSQ", "RSQ", 
 			"COLON", "QUERY", "MUL", "DIV", "MOD", "ASN", "PULS", "MINUS", "IN", 
 			"NIN", "IS", "NIS", "PACKAGE", "IMPORT", "INT", "REAL", "STRING", "UNIT", 
-			"VAL", "VAR", "ANY", "FUN", "RET", "STR", "ID", "NUM", "FN", "DIGIT", 
+			"VAL", "VAR", "ANY", "FUN", "RETC", "STR", "ID", "NUM", "FN", "DIGIT", 
 			"WS", "COMMENT", "COMMENT2"
 		};
 	}

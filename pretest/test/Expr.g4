@@ -64,10 +64,18 @@ statement
         | functionD SEMI?
         | expression SEMI?
         | exit SEMI?
-        | ID assign SEMI?
+        | ID assign SEMI?        
         //| forloop 
-        //| whileloop
-        //| ifthenelse 
+        //| whileloop        
+        ;
+
+ifthenelse
+        : IF LPAR expression RPAR ((LB innerblock RB) | statement) elif?        
+        ; 
+
+elif
+        : ELSE statement
+        | ELSE LB innerblock RB
         ;
 
 exit
@@ -76,7 +84,7 @@ exit
 
 expression
         : expor 
-        //| LPAR expor RPAR       
+        | ifthenelse
         ;
 
 expor
@@ -115,14 +123,14 @@ prefixexp
         ;
 
 exppostfix
-        : functioncall
+        : fccall
         | ID oprpostfix
         | LPAR expression RPAR
         | LSQ expression RSQ
         | value
         ;
 
-functioncall
+fccall
         : ID LPAR argu RPAR
         ;
 
@@ -189,15 +197,24 @@ propertyD
 
 typef
         : INT
-        | REAL
+        | FLOAT
+        | DOUBLE
         | STRING
         | UNIT
         | ANY
+        | SHORT
+        | LONG
+        | BOOL
+        | BYTE
+        | CHAR
         ;
 
 value 
         : STR
         | NUM
+        | NULL
+        | (TRUE|FALSE)
+        | CHR
         ;
 
 
@@ -246,19 +263,33 @@ NIN : '!in';
 IS : 'is';
 NIS : '!is';
 
-PACKAGE : 'package';
-IMPORT : 'import';
+IF : 'if';
+ELSE : 'else';
+
+BOOL : 'Boolean';
+BYTE : 'Byte';
+SHORT : 'Short';
+LONG : 'Long';
+FLOAT : 'Float';
+DOUBLE : 'Double';
 INT : 'Int';
-REAL : 'Double';
 STRING : 'String';
 UNIT : 'Unit';
+ANY : 'Any';
+CHAR : 'Char';
+
+PACKAGE : 'package';
+IMPORT : 'import';
 VAL : 'val';
 VAR : 'var';
-ANY : 'Any';
 
+NULL : 'null';
 FUN : 'fun';
 RETC : 'return';
+TRUE : 'true';
+FALSE : 'false';
 
+CHR : '\'' ~[\r\n] '\'';
 STR : '"' ~[\r\n]* '"';
 ID : FN ( FN | DIGIT )*;
 NUM : '-'?DIGIT+DOT?DIGIT*;

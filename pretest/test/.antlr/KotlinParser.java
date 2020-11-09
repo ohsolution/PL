@@ -1,4 +1,4 @@
-// Generated from /home/ohhaeseong/Ohsolution/University/ProgrammingLanguage/pretest/test/Expr.g4 by ANTLR 4.8
+// Generated from /home/ohhaeseong/Ohsolution/University/ProgrammingLanguage/pretest/test/Kotlin.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class ExprParser extends Parser {
+public class KotlinParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.8", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -25,7 +25,7 @@ public class ExprParser extends Parser {
 		VAL=53, VAR=54, NULL=55, FUN=56, RETC=57, TRUE=58, FALSE=59, CHR=60, STR=61, 
 		ID=62, NUM=63, FN=64, DIGIT=65, WS=66, COMMENT=67, COMMENT2=68;
 	public static final int
-		RULE_file = 0, RULE_packageR = 1, RULE_importL = 2, RULE_importR = 3, 
+		RULE_prog = 0, RULE_packageR = 1, RULE_importL = 2, RULE_importR = 3, 
 		RULE_outerL = 4, RULE_outerR = 5, RULE_functionD = 6, RULE_argument = 7, 
 		RULE_whichfunction = 8, RULE_assign = 9, RULE_assignopr = 10, RULE_innerblock = 11, 
 		RULE_statement = 12, RULE_ifthenelse = 13, RULE_elif = 14, RULE_exit = 15, 
@@ -37,7 +37,7 @@ public class ExprParser extends Parser {
 		RULE_variableD = 37, RULE_propertyD = 38, RULE_typef = 39, RULE_value = 40;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"file", "packageR", "importL", "importR", "outerL", "outerR", "functionD", 
+			"prog", "packageR", "importL", "importR", "outerL", "outerR", "functionD", 
 			"argument", "whichfunction", "assign", "assignopr", "innerblock", "statement", 
 			"ifthenelse", "elif", "exit", "expression", "expor", "expand", "expeq", 
 			"expcmp", "exppre", "expR", "expadd", "expmul", "prefixexp", "exppostfix", 
@@ -107,7 +107,7 @@ public class ExprParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "Expr.g4"; }
+	public String getGrammarFileName() { return "Kotlin.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -118,12 +118,12 @@ public class ExprParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-	public ExprParser(TokenStream input) {
+	public KotlinParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
-	public static class FileContext extends ParserRuleContext {
+	public static class ProgContext extends ParserRuleContext {
 		public PackageRContext packageR() {
 			return getRuleContext(PackageRContext.class,0);
 		}
@@ -133,15 +133,15 @@ public class ExprParser extends Parser {
 		public OuterLContext outerL() {
 			return getRuleContext(OuterLContext.class,0);
 		}
-		public FileContext(ParserRuleContext parent, int invokingState) {
+		public ProgContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_file; }
+		@Override public int getRuleIndex() { return RULE_prog; }
 	}
 
-	public final FileContext file() throws RecognitionException {
-		FileContext _localctx = new FileContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_file);
+	public final ProgContext prog() throws RecognitionException {
+		ProgContext _localctx = new ProgContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_prog);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -190,16 +190,16 @@ public class ExprParser extends Parser {
 	}
 
 	public static class PackageRContext extends ParserRuleContext {
-		public TerminalNode PACKAGE() { return getToken(ExprParser.PACKAGE, 0); }
-		public List<TerminalNode> ID() { return getTokens(ExprParser.ID); }
+		public TerminalNode PACKAGE() { return getToken(KotlinParser.PACKAGE, 0); }
+		public List<TerminalNode> ID() { return getTokens(KotlinParser.ID); }
 		public TerminalNode ID(int i) {
-			return getToken(ExprParser.ID, i);
+			return getToken(KotlinParser.ID, i);
 		}
-		public List<TerminalNode> DOT() { return getTokens(ExprParser.DOT); }
+		public List<TerminalNode> DOT() { return getTokens(KotlinParser.DOT); }
 		public TerminalNode DOT(int i) {
-			return getToken(ExprParser.DOT, i);
+			return getToken(KotlinParser.DOT, i);
 		}
-		public TerminalNode SEMI() { return getToken(ExprParser.SEMI, 0); }
+		public TerminalNode SEMI() { return getToken(KotlinParser.SEMI, 0); }
 		public PackageRContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -304,20 +304,20 @@ public class ExprParser extends Parser {
 	}
 
 	public static class ImportRContext extends ParserRuleContext {
-		public TerminalNode IMPORT() { return getToken(ExprParser.IMPORT, 0); }
-		public List<TerminalNode> ID() { return getTokens(ExprParser.ID); }
+		public TerminalNode IMPORT() { return getToken(KotlinParser.IMPORT, 0); }
+		public List<TerminalNode> ID() { return getTokens(KotlinParser.ID); }
 		public TerminalNode ID(int i) {
-			return getToken(ExprParser.ID, i);
+			return getToken(KotlinParser.ID, i);
 		}
-		public List<TerminalNode> DOT() { return getTokens(ExprParser.DOT); }
+		public List<TerminalNode> DOT() { return getTokens(KotlinParser.DOT); }
 		public TerminalNode DOT(int i) {
-			return getToken(ExprParser.DOT, i);
+			return getToken(KotlinParser.DOT, i);
 		}
-		public List<TerminalNode> MUL() { return getTokens(ExprParser.MUL); }
+		public List<TerminalNode> MUL() { return getTokens(KotlinParser.MUL); }
 		public TerminalNode MUL(int i) {
-			return getToken(ExprParser.MUL, i);
+			return getToken(KotlinParser.MUL, i);
 		}
-		public TerminalNode SEMI() { return getToken(ExprParser.SEMI, 0); }
+		public TerminalNode SEMI() { return getToken(KotlinParser.SEMI, 0); }
 		public ImportRContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -486,15 +486,15 @@ public class ExprParser extends Parser {
 	}
 
 	public static class FunctionDContext extends ParserRuleContext {
-		public TerminalNode FUN() { return getToken(ExprParser.FUN, 0); }
-		public TerminalNode ID() { return getToken(ExprParser.ID, 0); }
+		public TerminalNode FUN() { return getToken(KotlinParser.FUN, 0); }
+		public TerminalNode ID() { return getToken(KotlinParser.ID, 0); }
 		public ArgumentContext argument() {
 			return getRuleContext(ArgumentContext.class,0);
 		}
 		public WhichfunctionContext whichfunction() {
 			return getRuleContext(WhichfunctionContext.class,0);
 		}
-		public TerminalNode SEMI() { return getToken(ExprParser.SEMI, 0); }
+		public TerminalNode SEMI() { return getToken(KotlinParser.SEMI, 0); }
 		public FunctionDContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -539,15 +539,15 @@ public class ExprParser extends Parser {
 	}
 
 	public static class ArgumentContext extends ParserRuleContext {
-		public TerminalNode LPAR() { return getToken(ExprParser.LPAR, 0); }
-		public TerminalNode RPAR() { return getToken(ExprParser.RPAR, 0); }
-		public List<TerminalNode> ID() { return getTokens(ExprParser.ID); }
+		public TerminalNode LPAR() { return getToken(KotlinParser.LPAR, 0); }
+		public TerminalNode RPAR() { return getToken(KotlinParser.RPAR, 0); }
+		public List<TerminalNode> ID() { return getTokens(KotlinParser.ID); }
 		public TerminalNode ID(int i) {
-			return getToken(ExprParser.ID, i);
+			return getToken(KotlinParser.ID, i);
 		}
-		public List<TerminalNode> COLON() { return getTokens(ExprParser.COLON); }
+		public List<TerminalNode> COLON() { return getTokens(KotlinParser.COLON); }
 		public TerminalNode COLON(int i) {
-			return getToken(ExprParser.COLON, i);
+			return getToken(KotlinParser.COLON, i);
 		}
 		public List<TypefContext> typef() {
 			return getRuleContexts(TypefContext.class);
@@ -555,9 +555,9 @@ public class ExprParser extends Parser {
 		public TypefContext typef(int i) {
 			return getRuleContext(TypefContext.class,i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ExprParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(KotlinParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ExprParser.COMMA, i);
+			return getToken(KotlinParser.COMMA, i);
 		}
 		public ArgumentContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -621,16 +621,16 @@ public class ExprParser extends Parser {
 		public AssignContext assign() {
 			return getRuleContext(AssignContext.class,0);
 		}
-		public TerminalNode LB() { return getToken(ExprParser.LB, 0); }
+		public TerminalNode LB() { return getToken(KotlinParser.LB, 0); }
 		public InnerblockContext innerblock() {
 			return getRuleContext(InnerblockContext.class,0);
 		}
-		public TerminalNode RB() { return getToken(ExprParser.RB, 0); }
-		public TerminalNode COLON() { return getToken(ExprParser.COLON, 0); }
+		public TerminalNode RB() { return getToken(KotlinParser.RB, 0); }
+		public TerminalNode COLON() { return getToken(KotlinParser.COLON, 0); }
 		public TypefContext typef() {
 			return getRuleContext(TypefContext.class,0);
 		}
-		public TerminalNode QUERY() { return getToken(ExprParser.QUERY, 0); }
+		public TerminalNode QUERY() { return getToken(KotlinParser.QUERY, 0); }
 		public WhichfunctionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -751,12 +751,12 @@ public class ExprParser extends Parser {
 	}
 
 	public static class AssignoprContext extends ParserRuleContext {
-		public TerminalNode ASN() { return getToken(ExprParser.ASN, 0); }
-		public TerminalNode PASN() { return getToken(ExprParser.PASN, 0); }
-		public TerminalNode MASN() { return getToken(ExprParser.MASN, 0); }
-		public TerminalNode MULASN() { return getToken(ExprParser.MULASN, 0); }
-		public TerminalNode DIVASN() { return getToken(ExprParser.DIVASN, 0); }
-		public TerminalNode MODASN() { return getToken(ExprParser.MODASN, 0); }
+		public TerminalNode ASN() { return getToken(KotlinParser.ASN, 0); }
+		public TerminalNode PASN() { return getToken(KotlinParser.PASN, 0); }
+		public TerminalNode MASN() { return getToken(KotlinParser.MASN, 0); }
+		public TerminalNode MULASN() { return getToken(KotlinParser.MULASN, 0); }
+		public TerminalNode DIVASN() { return getToken(KotlinParser.DIVASN, 0); }
+		public TerminalNode MODASN() { return getToken(KotlinParser.MODASN, 0); }
 		public AssignoprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -844,7 +844,7 @@ public class ExprParser extends Parser {
 		public VariableDContext variableD() {
 			return getRuleContext(VariableDContext.class,0);
 		}
-		public TerminalNode SEMI() { return getToken(ExprParser.SEMI, 0); }
+		public TerminalNode SEMI() { return getToken(KotlinParser.SEMI, 0); }
 		public FunctionDContext functionD() {
 			return getRuleContext(FunctionDContext.class,0);
 		}
@@ -854,7 +854,7 @@ public class ExprParser extends Parser {
 		public ExitContext exit() {
 			return getRuleContext(ExitContext.class,0);
 		}
-		public TerminalNode ID() { return getToken(ExprParser.ID, 0); }
+		public TerminalNode ID() { return getToken(KotlinParser.ID, 0); }
 		public AssignContext assign() {
 			return getRuleContext(AssignContext.class,0);
 		}
@@ -972,23 +972,23 @@ public class ExprParser extends Parser {
 	}
 
 	public static class IfthenelseContext extends ParserRuleContext {
-		public TerminalNode IF() { return getToken(ExprParser.IF, 0); }
-		public TerminalNode LPAR() { return getToken(ExprParser.LPAR, 0); }
+		public TerminalNode IF() { return getToken(KotlinParser.IF, 0); }
+		public TerminalNode LPAR() { return getToken(KotlinParser.LPAR, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public TerminalNode RPAR() { return getToken(ExprParser.RPAR, 0); }
+		public TerminalNode RPAR() { return getToken(KotlinParser.RPAR, 0); }
 		public StatementContext statement() {
 			return getRuleContext(StatementContext.class,0);
 		}
 		public ElifContext elif() {
 			return getRuleContext(ElifContext.class,0);
 		}
-		public TerminalNode LB() { return getToken(ExprParser.LB, 0); }
+		public TerminalNode LB() { return getToken(KotlinParser.LB, 0); }
 		public InnerblockContext innerblock() {
 			return getRuleContext(InnerblockContext.class,0);
 		}
-		public TerminalNode RB() { return getToken(ExprParser.RB, 0); }
+		public TerminalNode RB() { return getToken(KotlinParser.RB, 0); }
 		public IfthenelseContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1074,15 +1074,15 @@ public class ExprParser extends Parser {
 	}
 
 	public static class ElifContext extends ParserRuleContext {
-		public TerminalNode ELSE() { return getToken(ExprParser.ELSE, 0); }
+		public TerminalNode ELSE() { return getToken(KotlinParser.ELSE, 0); }
 		public StatementContext statement() {
 			return getRuleContext(StatementContext.class,0);
 		}
-		public TerminalNode LB() { return getToken(ExprParser.LB, 0); }
+		public TerminalNode LB() { return getToken(KotlinParser.LB, 0); }
 		public InnerblockContext innerblock() {
 			return getRuleContext(InnerblockContext.class,0);
 		}
-		public TerminalNode RB() { return getToken(ExprParser.RB, 0); }
+		public TerminalNode RB() { return getToken(KotlinParser.RB, 0); }
 		public ElifContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1132,7 +1132,7 @@ public class ExprParser extends Parser {
 	}
 
 	public static class ExitContext extends ParserRuleContext {
-		public TerminalNode RETC() { return getToken(ExprParser.RETC, 0); }
+		public TerminalNode RETC() { return getToken(KotlinParser.RETC, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -1233,9 +1233,9 @@ public class ExprParser extends Parser {
 		public ExpandContext expand(int i) {
 			return getRuleContext(ExpandContext.class,i);
 		}
-		public List<TerminalNode> LOGICOR() { return getTokens(ExprParser.LOGICOR); }
+		public List<TerminalNode> LOGICOR() { return getTokens(KotlinParser.LOGICOR); }
 		public TerminalNode LOGICOR(int i) {
-			return getToken(ExprParser.LOGICOR, i);
+			return getToken(KotlinParser.LOGICOR, i);
 		}
 		public ExporContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1288,9 +1288,9 @@ public class ExprParser extends Parser {
 		public ExpeqContext expeq(int i) {
 			return getRuleContext(ExpeqContext.class,i);
 		}
-		public List<TerminalNode> LOGICAND() { return getTokens(ExprParser.LOGICAND); }
+		public List<TerminalNode> LOGICAND() { return getTokens(KotlinParser.LOGICAND); }
 		public TerminalNode LOGICAND(int i) {
-			return getToken(ExprParser.LOGICAND, i);
+			return getToken(KotlinParser.LOGICAND, i);
 		}
 		public ExpandContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1548,9 +1548,9 @@ public class ExprParser extends Parser {
 		public ExpaddContext expadd(int i) {
 			return getRuleContext(ExpaddContext.class,i);
 		}
-		public List<TerminalNode> TWODOT() { return getTokens(ExprParser.TWODOT); }
+		public List<TerminalNode> TWODOT() { return getTokens(KotlinParser.TWODOT); }
 		public TerminalNode TWODOT(int i) {
-			return getToken(ExprParser.TWODOT, i);
+			return getToken(KotlinParser.TWODOT, i);
 		}
 		public ExpRContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1761,17 +1761,17 @@ public class ExprParser extends Parser {
 		public FccallContext fccall() {
 			return getRuleContext(FccallContext.class,0);
 		}
-		public TerminalNode ID() { return getToken(ExprParser.ID, 0); }
+		public TerminalNode ID() { return getToken(KotlinParser.ID, 0); }
 		public OprpostfixContext oprpostfix() {
 			return getRuleContext(OprpostfixContext.class,0);
 		}
-		public TerminalNode LPAR() { return getToken(ExprParser.LPAR, 0); }
+		public TerminalNode LPAR() { return getToken(KotlinParser.LPAR, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public TerminalNode RPAR() { return getToken(ExprParser.RPAR, 0); }
-		public TerminalNode LSQ() { return getToken(ExprParser.LSQ, 0); }
-		public TerminalNode RSQ() { return getToken(ExprParser.RSQ, 0); }
+		public TerminalNode RPAR() { return getToken(KotlinParser.RPAR, 0); }
+		public TerminalNode LSQ() { return getToken(KotlinParser.LSQ, 0); }
+		public TerminalNode RSQ() { return getToken(KotlinParser.RSQ, 0); }
 		public ValueContext value() {
 			return getRuleContext(ValueContext.class,0);
 		}
@@ -1847,12 +1847,12 @@ public class ExprParser extends Parser {
 	}
 
 	public static class FccallContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(ExprParser.ID, 0); }
-		public TerminalNode LPAR() { return getToken(ExprParser.LPAR, 0); }
+		public TerminalNode ID() { return getToken(KotlinParser.ID, 0); }
+		public TerminalNode LPAR() { return getToken(KotlinParser.LPAR, 0); }
 		public ArguContext argu() {
 			return getRuleContext(ArguContext.class,0);
 		}
-		public TerminalNode RPAR() { return getToken(ExprParser.RPAR, 0); }
+		public TerminalNode RPAR() { return getToken(KotlinParser.RPAR, 0); }
 		public FccallContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1887,9 +1887,9 @@ public class ExprParser extends Parser {
 	}
 
 	public static class ArguContext extends ParserRuleContext {
-		public List<TerminalNode> ID() { return getTokens(ExprParser.ID); }
+		public List<TerminalNode> ID() { return getTokens(KotlinParser.ID); }
 		public TerminalNode ID(int i) {
-			return getToken(ExprParser.ID, i);
+			return getToken(KotlinParser.ID, i);
 		}
 		public List<ValueContext> value() {
 			return getRuleContexts(ValueContext.class);
@@ -1903,9 +1903,9 @@ public class ExprParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ExprParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(KotlinParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ExprParser.COMMA, i);
+			return getToken(KotlinParser.COMMA, i);
 		}
 		public ArguContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1978,15 +1978,15 @@ public class ExprParser extends Parser {
 	}
 
 	public static class OprpostfixContext extends ParserRuleContext {
-		public TerminalNode DPULS() { return getToken(ExprParser.DPULS, 0); }
-		public TerminalNode DMINUS() { return getToken(ExprParser.DMINUS, 0); }
-		public List<TerminalNode> DOT() { return getTokens(ExprParser.DOT); }
+		public TerminalNode DPULS() { return getToken(KotlinParser.DPULS, 0); }
+		public TerminalNode DMINUS() { return getToken(KotlinParser.DMINUS, 0); }
+		public List<TerminalNode> DOT() { return getTokens(KotlinParser.DOT); }
 		public TerminalNode DOT(int i) {
-			return getToken(ExprParser.DOT, i);
+			return getToken(KotlinParser.DOT, i);
 		}
-		public List<TerminalNode> ID() { return getTokens(ExprParser.ID); }
+		public List<TerminalNode> ID() { return getTokens(KotlinParser.ID); }
 		public TerminalNode ID(int i) {
-			return getToken(ExprParser.ID, i);
+			return getToken(KotlinParser.ID, i);
 		}
 		public OprpostfixContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -2051,10 +2051,10 @@ public class ExprParser extends Parser {
 	}
 
 	public static class PrefixoprContext extends ParserRuleContext {
-		public TerminalNode DPULS() { return getToken(ExprParser.DPULS, 0); }
-		public TerminalNode DMINUS() { return getToken(ExprParser.DMINUS, 0); }
-		public TerminalNode MINUS() { return getToken(ExprParser.MINUS, 0); }
-		public TerminalNode PULS() { return getToken(ExprParser.PULS, 0); }
+		public TerminalNode DPULS() { return getToken(KotlinParser.DPULS, 0); }
+		public TerminalNode DMINUS() { return getToken(KotlinParser.DMINUS, 0); }
+		public TerminalNode MINUS() { return getToken(KotlinParser.MINUS, 0); }
+		public TerminalNode PULS() { return getToken(KotlinParser.PULS, 0); }
 		public PrefixoprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -2092,9 +2092,9 @@ public class ExprParser extends Parser {
 	}
 
 	public static class MuloprContext extends ParserRuleContext {
-		public TerminalNode MUL() { return getToken(ExprParser.MUL, 0); }
-		public TerminalNode DIV() { return getToken(ExprParser.DIV, 0); }
-		public TerminalNode MOD() { return getToken(ExprParser.MOD, 0); }
+		public TerminalNode MUL() { return getToken(KotlinParser.MUL, 0); }
+		public TerminalNode DIV() { return getToken(KotlinParser.DIV, 0); }
+		public TerminalNode MOD() { return getToken(KotlinParser.MOD, 0); }
 		public MuloprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -2132,8 +2132,8 @@ public class ExprParser extends Parser {
 	}
 
 	public static class AddoprContext extends ParserRuleContext {
-		public TerminalNode PULS() { return getToken(ExprParser.PULS, 0); }
-		public TerminalNode MINUS() { return getToken(ExprParser.MINUS, 0); }
+		public TerminalNode PULS() { return getToken(KotlinParser.PULS, 0); }
+		public TerminalNode MINUS() { return getToken(KotlinParser.MINUS, 0); }
 		public AddoprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -2171,8 +2171,8 @@ public class ExprParser extends Parser {
 	}
 
 	public static class InoprContext extends ParserRuleContext {
-		public TerminalNode IN() { return getToken(ExprParser.IN, 0); }
-		public TerminalNode NIN() { return getToken(ExprParser.NIN, 0); }
+		public TerminalNode IN() { return getToken(KotlinParser.IN, 0); }
+		public TerminalNode NIN() { return getToken(KotlinParser.NIN, 0); }
 		public InoprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -2210,8 +2210,8 @@ public class ExprParser extends Parser {
 	}
 
 	public static class IsoprContext extends ParserRuleContext {
-		public TerminalNode IS() { return getToken(ExprParser.IS, 0); }
-		public TerminalNode NIS() { return getToken(ExprParser.NIS, 0); }
+		public TerminalNode IS() { return getToken(KotlinParser.IS, 0); }
+		public TerminalNode NIS() { return getToken(KotlinParser.NIS, 0); }
 		public IsoprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -2249,8 +2249,8 @@ public class ExprParser extends Parser {
 	}
 
 	public static class EqoprContext extends ParserRuleContext {
-		public TerminalNode EQ() { return getToken(ExprParser.EQ, 0); }
-		public TerminalNode NEQ() { return getToken(ExprParser.NEQ, 0); }
+		public TerminalNode EQ() { return getToken(KotlinParser.EQ, 0); }
+		public TerminalNode NEQ() { return getToken(KotlinParser.NEQ, 0); }
 		public EqoprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -2288,10 +2288,10 @@ public class ExprParser extends Parser {
 	}
 
 	public static class CmpoprContext extends ParserRuleContext {
-		public TerminalNode GT() { return getToken(ExprParser.GT, 0); }
-		public TerminalNode LT() { return getToken(ExprParser.LT, 0); }
-		public TerminalNode GE() { return getToken(ExprParser.GE, 0); }
-		public TerminalNode LE() { return getToken(ExprParser.LE, 0); }
+		public TerminalNode GT() { return getToken(KotlinParser.GT, 0); }
+		public TerminalNode LT() { return getToken(KotlinParser.LT, 0); }
+		public TerminalNode GE() { return getToken(KotlinParser.GE, 0); }
+		public TerminalNode LE() { return getToken(KotlinParser.LE, 0); }
 		public CmpoprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -2332,13 +2332,13 @@ public class ExprParser extends Parser {
 		public PropertyDContext propertyD() {
 			return getRuleContext(PropertyDContext.class,0);
 		}
-		public TerminalNode ID() { return getToken(ExprParser.ID, 0); }
-		public TerminalNode COLON() { return getToken(ExprParser.COLON, 0); }
+		public TerminalNode ID() { return getToken(KotlinParser.ID, 0); }
+		public TerminalNode COLON() { return getToken(KotlinParser.COLON, 0); }
 		public TypefContext typef() {
 			return getRuleContext(TypefContext.class,0);
 		}
-		public TerminalNode VAL() { return getToken(ExprParser.VAL, 0); }
-		public TerminalNode VAR() { return getToken(ExprParser.VAR, 0); }
+		public TerminalNode VAL() { return getToken(KotlinParser.VAL, 0); }
+		public TerminalNode VAR() { return getToken(KotlinParser.VAR, 0); }
 		public VariableDContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -2395,18 +2395,18 @@ public class ExprParser extends Parser {
 	}
 
 	public static class PropertyDContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(ExprParser.ID, 0); }
-		public TerminalNode ASN() { return getToken(ExprParser.ASN, 0); }
+		public TerminalNode ID() { return getToken(KotlinParser.ID, 0); }
+		public TerminalNode ASN() { return getToken(KotlinParser.ASN, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public TerminalNode VAL() { return getToken(ExprParser.VAL, 0); }
-		public TerminalNode VAR() { return getToken(ExprParser.VAR, 0); }
-		public TerminalNode COLON() { return getToken(ExprParser.COLON, 0); }
+		public TerminalNode VAL() { return getToken(KotlinParser.VAL, 0); }
+		public TerminalNode VAR() { return getToken(KotlinParser.VAR, 0); }
+		public TerminalNode COLON() { return getToken(KotlinParser.COLON, 0); }
 		public TypefContext typef() {
 			return getRuleContext(TypefContext.class,0);
 		}
-		public TerminalNode SEMI() { return getToken(ExprParser.SEMI, 0); }
+		public TerminalNode SEMI() { return getToken(KotlinParser.SEMI, 0); }
 		public PropertyDContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -2472,17 +2472,17 @@ public class ExprParser extends Parser {
 	}
 
 	public static class TypefContext extends ParserRuleContext {
-		public TerminalNode INT() { return getToken(ExprParser.INT, 0); }
-		public TerminalNode FLOAT() { return getToken(ExprParser.FLOAT, 0); }
-		public TerminalNode DOUBLE() { return getToken(ExprParser.DOUBLE, 0); }
-		public TerminalNode STRING() { return getToken(ExprParser.STRING, 0); }
-		public TerminalNode UNIT() { return getToken(ExprParser.UNIT, 0); }
-		public TerminalNode ANY() { return getToken(ExprParser.ANY, 0); }
-		public TerminalNode SHORT() { return getToken(ExprParser.SHORT, 0); }
-		public TerminalNode LONG() { return getToken(ExprParser.LONG, 0); }
-		public TerminalNode BOOL() { return getToken(ExprParser.BOOL, 0); }
-		public TerminalNode BYTE() { return getToken(ExprParser.BYTE, 0); }
-		public TerminalNode CHAR() { return getToken(ExprParser.CHAR, 0); }
+		public TerminalNode INT() { return getToken(KotlinParser.INT, 0); }
+		public TerminalNode FLOAT() { return getToken(KotlinParser.FLOAT, 0); }
+		public TerminalNode DOUBLE() { return getToken(KotlinParser.DOUBLE, 0); }
+		public TerminalNode STRING() { return getToken(KotlinParser.STRING, 0); }
+		public TerminalNode UNIT() { return getToken(KotlinParser.UNIT, 0); }
+		public TerminalNode ANY() { return getToken(KotlinParser.ANY, 0); }
+		public TerminalNode SHORT() { return getToken(KotlinParser.SHORT, 0); }
+		public TerminalNode LONG() { return getToken(KotlinParser.LONG, 0); }
+		public TerminalNode BOOL() { return getToken(KotlinParser.BOOL, 0); }
+		public TerminalNode BYTE() { return getToken(KotlinParser.BYTE, 0); }
+		public TerminalNode CHAR() { return getToken(KotlinParser.CHAR, 0); }
 		public TypefContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -2520,12 +2520,12 @@ public class ExprParser extends Parser {
 	}
 
 	public static class ValueContext extends ParserRuleContext {
-		public TerminalNode STR() { return getToken(ExprParser.STR, 0); }
-		public TerminalNode NUM() { return getToken(ExprParser.NUM, 0); }
-		public TerminalNode NULL() { return getToken(ExprParser.NULL, 0); }
-		public TerminalNode TRUE() { return getToken(ExprParser.TRUE, 0); }
-		public TerminalNode FALSE() { return getToken(ExprParser.FALSE, 0); }
-		public TerminalNode CHR() { return getToken(ExprParser.CHR, 0); }
+		public TerminalNode STR() { return getToken(KotlinParser.STR, 0); }
+		public TerminalNode NUM() { return getToken(KotlinParser.NUM, 0); }
+		public TerminalNode NULL() { return getToken(KotlinParser.NULL, 0); }
+		public TerminalNode TRUE() { return getToken(KotlinParser.TRUE, 0); }
+		public TerminalNode FALSE() { return getToken(KotlinParser.FALSE, 0); }
+		public TerminalNode CHR() { return getToken(KotlinParser.CHR, 0); }
 		public ValueContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}

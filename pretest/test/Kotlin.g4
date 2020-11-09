@@ -1,10 +1,10 @@
-/* Expr.g4 */
-grammar Expr;
+/* Kotlin.g4 */
+grammar Kotlin;
 
 // parser rules
 
 
-file    
+prog    
         : packageR? importL? outerL?  // main { statement* }
         ;
 

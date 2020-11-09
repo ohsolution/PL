@@ -141,7 +141,7 @@ COMMENT
 COMMENT2
 
 rule names:
-file
+prog
 packageR
 importL
 importR

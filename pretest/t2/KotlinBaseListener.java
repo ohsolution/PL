@@ -315,6 +315,18 @@ public class KotlinBaseListener implements KotlinListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExprange(KotlinParser.ExprangeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprange(KotlinParser.ExprangeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExpR(KotlinParser.ExpRContext ctx) { }
 	/**
 	 * {@inheritDoc}

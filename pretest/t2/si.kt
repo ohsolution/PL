@@ -65,7 +65,7 @@ fun mtain() {
 
     a = 2
     // arbitrary expression in template:
-    val s2 = "${s1.replace("is", "was")}, but now is $a"
+    
     println(x * y)
     printSum(-1, 8)
 }

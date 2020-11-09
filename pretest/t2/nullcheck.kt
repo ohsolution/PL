@@ -28,6 +28,11 @@ fun getSTringLength(obj: Any): Int?
 
 fun main()
 {
+
+    for(x in 1..10 step 2) print(x)
+
+    for(x: Int in 9 downTo 0 step 3) print(x);
+
     while(index < items.size)
     {
         println("item at index is");

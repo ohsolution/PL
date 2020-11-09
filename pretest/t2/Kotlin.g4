@@ -5,7 +5,7 @@ grammar Kotlin;
 
 
 prog    
-        : packageR? importL? outerL? mainf outerL?  // main { statement* }
+        : packageR? importL? outerL? mainf outerL?
         ;
 
 packageR 
@@ -73,7 +73,7 @@ statement
         ;
 
 forloop
-        : FOR LPAR expression RPAR ((LB innerblock RB) | statement)
+        : FOR LPAR ID (COLON typef)? IN expression RPAR ((LB innerblock RB) | statement)
         ;
 
 whileloop
@@ -115,7 +115,11 @@ expcmp
         ;
 
 exppre
-        : expR ((inopr expR)|(isopr typef))*
+        : exprange ((inopr exprange)|(isopr typef))*
+        ;
+
+exprange
+        : expR (ID expR)*
         ;
 
 expR

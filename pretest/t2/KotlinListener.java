@@ -257,6 +257,16 @@ public interface KotlinListener extends ParseTreeListener {
 	 */
 	void exitExppre(KotlinParser.ExppreContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link KotlinParser#exprange}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprange(KotlinParser.ExprangeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KotlinParser#exprange}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprange(KotlinParser.ExprangeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link KotlinParser#expR}.
 	 * @param ctx the parse tree
 	 */

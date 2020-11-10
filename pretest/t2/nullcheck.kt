@@ -31,6 +31,8 @@ fun main()
 
     for(x in 1..10 step 2) print(x)
 
+    for(x in 9 downTo 0 step 3) print(x);
+
     for(x: Int in 9 downTo 0 step 3) print(x);
 
     while(index < items.size)
@@ -64,6 +66,7 @@ fun main()
     {
         println("'obj' string leng");        
     }
+
     printLength("incompreahwefw");
     printLength(1000)    
     printLength(listof(15));

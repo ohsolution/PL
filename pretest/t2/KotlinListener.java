@@ -67,6 +67,86 @@ public interface KotlinListener extends ParseTreeListener {
 	 */
 	void exitOuterR(KotlinParser.OuterRContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link KotlinParser#classD}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassD(KotlinParser.ClassDContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KotlinParser#classD}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassD(KotlinParser.ClassDContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KotlinParser#typec}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypec(KotlinParser.TypecContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KotlinParser#typec}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypec(KotlinParser.TypecContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KotlinParser#classinner}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassinner(KotlinParser.ClassinnerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KotlinParser#classinner}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassinner(KotlinParser.ClassinnerContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KotlinParser#propertyC}.
+	 * @param ctx the parse tree
+	 */
+	void enterPropertyC(KotlinParser.PropertyCContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KotlinParser#propertyC}.
+	 * @param ctx the parse tree
+	 */
+	void exitPropertyC(KotlinParser.PropertyCContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KotlinParser#valcD}.
+	 * @param ctx the parse tree
+	 */
+	void enterValcD(KotlinParser.ValcDContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KotlinParser#valcD}.
+	 * @param ctx the parse tree
+	 */
+	void exitValcD(KotlinParser.ValcDContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KotlinParser#funcD}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncD(KotlinParser.FuncDContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KotlinParser#funcD}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncD(KotlinParser.FuncDContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KotlinParser#cargus}.
+	 * @param ctx the parse tree
+	 */
+	void enterCargus(KotlinParser.CargusContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KotlinParser#cargus}.
+	 * @param ctx the parse tree
+	 */
+	void exitCargus(KotlinParser.CargusContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KotlinParser#cargu}.
+	 * @param ctx the parse tree
+	 */
+	void enterCargu(KotlinParser.CarguContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KotlinParser#cargu}.
+	 * @param ctx the parse tree
+	 */
+	void exitCargu(KotlinParser.CarguContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link KotlinParser#mainf}.
 	 * @param ctx the parse tree
 	 */

@@ -3,7 +3,6 @@ grammar Kotlin;
 
 // parser rules
 
-
 prog    
         : packageR? importL? outerL? mainf outerL?
         ;
@@ -26,14 +25,47 @@ outerL
 
 outerR
         : functionD
+        | classD
         | propertyD  
+        ;
+classD
+        : ABSTRACT? (CLASS | INTERFACE) ID cargus? (COLON typec)? (LB classinner RB)
+        ;
+
+typec
+        : expression (COMMA expression)*
+        ;
+
+classinner
+        : (propertyC SEMI?)*
+        ;
+        
+propertyC
+        : funcD
+        | valcD
+        ;
+
+valcD
+        : (ABSTRACT | OVERRIDE)? (VAL|VAR) ID (COLON typef GET?)? (ASN expression)? SEMI? 
+        ;
+
+funcD
+        : (ABSTRACT | OVERRIDE)? FUN ID argument (COLON typef? QUERY?)? whichfunction? SEMI?
+        ;
+
+cargus
+        : CONSTRUCTOR? LPAR cargu? (COMMA cargu)* RPAR
+        ;
+
+cargu 
+        : (VAL|VAR)? ID COLON typef
         ;
 
 mainf
         : FUN MAIN LPAR RPAR LB innerblock RB;        
 
 functionD
-        : FUN ID argument whichfunction SEMI?
+        : FUN ID argument (COLON typef? QUERY?)? whichfunction SEMI?
         ;
 
 argument
@@ -42,7 +74,7 @@ argument
 
 whichfunction
         : assign
-        | (COLON typef? QUERY?)? LB innerblock RB 
+        | LB innerblock RB 
         ;
 
 assign  
@@ -69,7 +101,8 @@ statement
         | exit SEMI?
         | ID assign SEMI?        
         | forloop 
-        | whileloop        
+        | whileloop
+        | classD        
         ;
 
 forloop
@@ -91,8 +124,8 @@ elif
         ;
 
 exit
-        : RETC expression
-        ; 
+        : RETC expression?
+        ;
 
 expression
         : expor 
@@ -172,7 +205,6 @@ prefixopr
         | PULS
         ;
 
-
 mulopr
         : MUL
         | DIV
@@ -228,6 +260,7 @@ typef
         | BOOL
         | BYTE
         | CHAR
+        | ID '<' typef '>'
         ;
 
 value 
@@ -306,6 +339,12 @@ PACKAGE : 'package';
 IMPORT : 'import';
 VAL : 'val';
 VAR : 'var';
+OVERRIDE : 'override';
+CLASS : 'class';
+ABSTRACT : 'abstract';
+INTERFACE : 'interface';
+GET : 'get()';
+CONSTRUCTOR : 'constructor';
 
 NULL : 'null';
 FUN : 'fun';

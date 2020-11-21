@@ -5,20 +5,20 @@ grammar Expr;
 prog	:   (assn SEMI NEWLINE? | expr SEMI NEWLINE?)*;
 expr    :   expr MULD expr
         |   expr PLUSM expr
+        |   LP expr RP
         |   num
         |   ID
-        |   LP expr RP
         ;
 assn    :   ID '=' num
         ;
-num     :   INT
-        |   REAL
+num     :   PLUSM?INT
+        |   PLUSM?REAL
         ;
 
 // lexer rules
 NEWLINE	: [\r\n]+ ;
-INT	: [+-]?[0-9]+ ;
-REAL: [+-]?[0-9]+'.'[0-9]* ;
+INT	: [0-9]+ ;
+REAL: [0-9]+'.'[0-9]* ;
 MULD: [*/];
 PLUSM: [+-];
 ID : [a-zA-Z]+ ;

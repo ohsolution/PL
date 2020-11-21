@@ -17,6 +17,7 @@ using namespace antlr4::tree;
 #define DEFAULT 0
 #define ASSNPORT 1
 #define EXPRPORT 2
+#define NUMPORT 3
 
 #define P_FI 2
 #define P_SE 3
@@ -38,8 +39,11 @@ struct opr
 class EvalListener : public ExprBaseListener {
 
 private:
-    int port= DEFAULT;
     
+    int port= DEFAULT;
+    int prep = DEFAULT;
+    int sign = 1;
+
     /* ASSN SECTION */
     string lid;
     double rval;
@@ -53,47 +57,43 @@ private:
 
 public:
     
+	virtual void enterExpr(ExprParser::ExprContext *ctx) {openport(EXPRPORT);}
 
-	virtual void enterProg(ExprParser::ProgContext *ctx) {
-		cout << "enterProg: \n";
-	}
-	virtual void exitProg(ExprParser::ProgContext *ctx) {
-		cout << "exitProg: \n";
-	}
-	virtual void enterExpr(ExprParser::ExprContext *ctx) {
-        openport(EXPRPORT);
-		cout << "\tenterExpr: \n";
-	}
-	virtual void exitExpr(ExprParser::ExprContext *ctx) {
-		cout << "\texitExpr: \n";
-	}
+    virtual void enterAssn(ExprParser::AssnContext *ctx) { openport(ASSNPORT); }
+    
+    virtual void exitAssn(ExprParser::AssnContext *ctx){ xhash[lid] = rval;}
 
-    virtual void enterAssn(ExprParser::AssnContext *ctx)
+    virtual void enterNum(ExprParser::NumContext *ctx)
     {
-        cout << "\tenterAssn: \n";
-        openport(ASSNPORT);
+        sign = 1;
+        prep = port;
+        openport(NUMPORT);
     }
+    virtual void exitNum(ExprParser::NumContext *ctx){ sign = 1;}
 
-    virtual void exitAssn(ExprParser::AssnContext *ctx)
+	virtual void visitTerminal(tree::TerminalNode *node) 
     {
-        xhash[lid] = rval;
-    }
-
-	virtual void visitTerminal(tree::TerminalNode *node) {
-		cout << "\t\tTerminal: " << node->getText() << "\n";
-
         int st = node->getSymbol()->getType();
         
         if(st == ExprLexer::SEMI) closeport();
 
+        if(port == NUMPORT)
+        {
+            if(st == ExprLexer::PLUSM)
+            {
+                if((node->getText())[0] == '-') sign = -1;
+            }
+            else port = prep;
+        }
+
         if(port == ASSNPORT)    
         {
             if(st == ExprLexer::ID) lid = node->getText();
-            if(st == ExprLexer::INT || st == ExprLexer::REAL) rval = stod(node->getText());            
+            if(st == ExprLexer::INT || st == ExprLexer::REAL) rval = stod(node->getText())*sign;            
         }
         else if(port == EXPRPORT)
         {
-            if(st == ExprLexer::INT || st == ExprLexer::REAL) bq.push({stod(node->getText()),' ',0});
+            if(st == ExprLexer::INT || st == ExprLexer::REAL) bq.push({stod(node->getText())*sign,' ',0});
             else if(st == ExprLexer::ID) bq.push({xhash[node->getText()],' ',0});
             else
             {
@@ -105,10 +105,10 @@ public:
 
                 push_op(tmp);                
             }
-        }            
+        }
 	}
 
-    void openport(int ty){ port = ty;}
+    void openport(int ty){port = ty;}
     void closeport(void)
     {
         if(port == EXPRPORT) calc();
@@ -162,7 +162,6 @@ public:
 
             if(!cur.isop)
             {
-                cout << "el : " << cur.val << endl;
                 vd.push_back(cur.val);
                 continue;
             }            
@@ -191,9 +190,8 @@ public:
 
             vd.push_back(ret);
         }
-        
-        
-        printf("%.1lf",vd.back());
+                
+        printf("%.1lf\n",vd.back());
     }
 };
 
@@ -211,17 +209,19 @@ int main(int argc, const char* argv[])
 		exit(0);
 	}
 
-	cout << "---Expression Evaluation with ANTLR listener---\n";
 	ANTLRInputStream input(stream);
-	ExprLexer lexer(&input);
-	CommonTokenStream tokens(&lexer);
-	ExprParser parser(&tokens);	
-    //ParseTree *tree = parser.prog();
 
-    //cout << tree->toStringTree(&parser) << endl;
+	ExprLexer lexer(&input);
+
+	CommonTokenStream tokens(&lexer);
+
+	ExprParser parser(&tokens);	
 
     ParseTreeWalker walker;
+
 	EvalListener listener;	
+
 	walker.walk(&listener, parser.prog());
+
     return 0;
 }

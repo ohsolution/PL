@@ -3,7 +3,6 @@ grammar Expr;
 
 // parser rules
 
-
 file    
         : NL? packageR? importL? outerL? NL? // main { statement* }
         ;

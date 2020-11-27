@@ -8,7 +8,7 @@ CFLAGS=-I. -I$(ANTLR4_RUNTIME)
 LIBS=-lantlr4-runtime
 
 ANTLR4DIR=antlr4-cpp
-OBJ=Kotlin2Java.o $(ANTLR4DIR)/KotlinBaseListener.o $(ANTLR4DIR)/KotlinLexer.o $(ANTLR4DIR)/KotlinListener.o $(ANTLR4DIR)/KotlinParser.o
+OBJ=Kotlin2Java.o $(ANTLR4DIR)/KotlinBaseVisitor.o $(ANTLR4DIR)/KotlinLexer.o $(ANTLR4DIR)/KotlinVisitor.o $(ANTLR4DIR)/KotlinParser.o
 
 default: antlr $(PROG)
 	
@@ -19,7 +19,7 @@ $(PROG): $(OBJ)
 	$(CXX) -c -o $@ $< $(CFLAGS)
 
 antlr: $(G4)
-	$(ANTLR4) $<
+	$(ANTLR4) -visitor $<
 
 .PHONY: clean
 
@@ -28,4 +28,6 @@ clean:
 
 wipe:	clean
 	rm -rf $(ANTLR4DIR)
+
+	
 	

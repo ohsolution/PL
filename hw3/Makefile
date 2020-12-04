@@ -19,7 +19,7 @@ $(PROG): $(OBJ)
 	$(CXX) -c -o $@ $< $(CFLAGS)
 
 antlr: $(G4)
-	$(ANTLR4) -visitor $<
+	$(ANTLR4) -no-listener -visitor $<
 
 .PHONY: clean
 

@@ -3,26 +3,24 @@ import java.util.*;
 
 class Main{
 
-public static final int a = 1;
-public static int b = 2;
-public static double c = 3.14;
-public static boolean d = true;
 
-public static int minus(int a,int b){
-return a - b;
+public static Integer parseInt(String str){
+return str.toIntOrNull ( );
 }
-public static Integer sum(int a,int b){
-double p = 4.3;
-double q = 2.3;
-return a + b;
-}
-public static Integer StringLength(Object obj){
-if(obj instanceof String){
-return ((String)obj).length();
-}return null;
+public static void printProduct(String arg1,String arg2){
+final void x = parseInt ( arg1 );
+final void y = parseInt ( arg2 );
+if(x != null && y != null){
+System.out.println ( x * y );
+}else System.out.println ( arg1 + " or " + arg2 + " is not a number" );
 }
 public static void main(String[] args) {
-System.out.println ( StringLength ( "String" ) );
+printProduct ( "6" , "7" );
+printProduct ( "a" , "7" );
+printProduct ( "a" , "b" );
+
+}
+}String" ) );
 System.out.println ( StringLength ( 123 ) ) ;;
 
 }

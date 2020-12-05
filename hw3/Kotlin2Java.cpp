@@ -32,20 +32,22 @@ unordered_map <string ,string> Ntypemap
 	{"Char","Character"},{"Long","Long"},{"Unit","Void"},{"Any","Object"},{"String","String"}
 });
 
-unordered_map <string,string> ckmap,gmap,tmap,bindmap;
+unordered_map <string,string> ckmap,gmap,tmap,bindmap,dtpmap;
 
 
 unordered_map <string,string> fmap
 ({
-	{"println","System.out.println"},{"is","instanceof"},{"print","System.out.print"},{"listOf","List.of"},
-	{"setOf","Set.of"}
+	{"println","System.out.println"},{"is","instanceof"},{"!is","instanceof"},{"print","System.out.print"},{"listOf","List.of"},
+	{"setOf","Set.of"},{"Any()",""},{"size","size()"}
 });
 
 
 
 
-void transform(vector<info> vi,bool enter=true,bool ton=true)
+vector<string> transform(vector<info> vi,bool enter=true,bool ton=true,bool rs=false)
 {
+	vector<string> vret;
+
 	for(int i=0;i<vi.size();++i)
 	{
 		info x = vi[i];
@@ -53,7 +55,11 @@ void transform(vector<info> vi,bool enter=true,bool ton=true)
 
 		if(fmap.find(x.str) != fmap.end()) ret = fmap[x.str];
 		
-		if(ton && tmap.find(x.str) != tmap.end()) ret = tmap[x.str];
+		if(tmap.find(x.str) != tmap.end())
+		{
+			if(!ton) ton = true;
+			else ret = tmap[x.str];
+		}
 
 		if(gmap.find(x.str) != gmap.end()) ret = gmap[x.str];
 		
@@ -61,12 +67,18 @@ void transform(vector<info> vi,bool enter=true,bool ton=true)
 
 		if(vi[i].type != KotlinLexer::DOT && i+1!=vi.size() && vi[i+1].type!=KotlinLexer::DOT) ret += " ";
 
-		cout << ret;
+		if(!rs) cout << ret;
+		else vret.push_back(ret);
 	}
 
-	if(enter && vi.size()) cout <<";\n";
+	if(enter && vi.size()) 
+	{
+		if(!rs) cout <<";\n";
+		else vret.push_back(";\n");
 
-	return;
+	}
+
+	return vret;
 }
 
 string typecheck(vector <info> vi,string bstr="")
@@ -75,11 +87,17 @@ string typecheck(vector <info> vi,string bstr="")
 	bool sok = false;
 	for(auto x : vi)
 	{
-		if(ckmap.find(x.str) != ckmap.end())
+		if(dtpmap.find(x.str) != dtpmap.end())
+		{
+			ret += dtpmap[x.str] + " ";
+			return ret;
+		}
+
+		if(ckmap.find(x.str) != ckmap.end() && ckmap[x.str] != "Any")
 		{
 			ret += typemap[ckmap[x.str]] + " ";
 			return ret;
-		}
+		}		
 
 		if(x.str == "listOf")
 		{
@@ -147,6 +165,8 @@ private:
 public:
 	virtual antlrcpp::Any visitProg(KotlinParser::ProgContext * ctx)
 	{
+		//visitPackageR(ctx->packageR());
+
 		cout << "import java.util.*;\n\n";
 
 		cout << "\n";
@@ -208,8 +228,16 @@ public:
 			visitTypef(ctx->typef());
 			for(auto x : vs[c])
 			{
-				if(ctx->QUERY()) cout << Ntypemap[x.str]<<" ";
-				else cout << typemap[x.str] << " ";
+				if(ctx->QUERY()) 
+				{
+					cout << Ntypemap[x.str]<<" ";
+					if(x.str != "Any") dtpmap.insert({ctx->ID()->getText(),Ntypemap[x.str]});
+				}
+				else 
+				{
+					cout << typemap[x.str] << " ";
+					if(x.str != "Any") dtpmap.insert({ctx->ID()->getText(),typemap[x.str]});
+				}
 			}
 			vs[c--].clear();
 		}
@@ -223,11 +251,11 @@ public:
 
 			for(int i=0;i<sz;++i) ckmap.insert({vs[c][i].str,vs[c][i+sz].str});
 			
-			vs[c--].clear();
-
-			vs[++c].clear();
 			if(ctx->whichfunction()->assign()) visitExpression(ctx->whichfunction()->assign()->expression());
-			cout << typecheck(vs[c]);
+			
+			string tmp = typecheck(vs[c]);
+			if(tmp != "Any") dtpmap[ctx->ID()->getText()] = tmp;
+			cout << tmp;
 			
 			ckmap.clear();
 			vs[c--].clear();				
@@ -239,7 +267,7 @@ public:
 		cout<<")";
 	
 		visitWhichfunction(ctx->whichfunction());
-	
+		tmap.clear();
 
 		return 0;
 	}
@@ -280,6 +308,22 @@ public:
 		return 0;
 	}
 
+	virtual antlrcpp::Any visitWhileloop(KotlinParser::WhileloopContext * ctx)
+	{
+		cout << "while(";
+		vs[++c].clear();
+		visitExpression(ctx->expression());
+		transform(vs[c],false);
+		
+		cout << "){\n";
+		if(ctx->innerblock()) visitInnerblock(ctx->innerblock());
+		else visitStatement(ctx->statement());
+
+		cout <<"\n}\n";
+		vs[c--].clear();
+		return 0;
+	}
+
 	virtual antlrcpp::Any visitAssign(KotlinParser::AssignContext * ctx)
 	{
 		visitChildren(ctx);	
@@ -301,6 +345,40 @@ public:
 		if(ck) cout<<"\n}\n";
 
 		for(auto x : ctx->statement()) visitStatement(x,true);
+		return 0;
+	}
+
+	virtual antlrcpp::Any visitIndexing(KotlinParser::IndexingContext * ctx)
+	{
+		int base = vs[c].size();
+
+		visitChildren(ctx);
+
+		vector<info> vt;
+
+		while(vs[c].size() != base)
+		{
+			vt.push_back(vs[c].back());
+			vs[c].pop_back();
+		}
+
+		while(!vt.empty())
+		{
+			info x = vt.back();vt.pop_back();
+
+			if(x.type == KotlinLexer::LSQ)
+			{	
+				vs[c].push_back({".",KotlinLexer::DOT});
+				vs[c].push_back({"get(",KotlinLexer::ID});
+			}
+			else if(x.type == KotlinLexer::RSQ)
+			{
+				vs[c].push_back({")",KotlinLexer::ID});
+			}
+			else vs[c].push_back(x);
+		}
+
+
 		return 0;
 	}
 
@@ -465,18 +543,31 @@ public:
 
 	virtual antlrcpp::Any visitIfthenelse(KotlinParser::IfthenelseContext * ctx)
 	{
+		bool tsk = false;
+
 		cout << "if(";
 		vs[++c].clear();
 		visitExpression(ctx->expression());
 		for(int i=0;i<vs[c].size();++i)
 		{
-			if(vs[c][i].type == KotlinLexer::IS)
+			if(vs[c][i].type == KotlinLexer::IS || vs[c][i].type == KotlinLexer::NIS)
 			{
+				if(vs[c][i].type == KotlinLexer::NIS) tsk = true;
 				string r = "(("+typemap[vs[c][i+1].str]+")"+vs[c][i-1].str+")";
 				tmap.insert({vs[c][i-1].str,r});		
 			}
 		}
-		transform(vs[c],false,false);
+
+		vector<string> vtmp = transform(vs[c],false,false,tsk);
+
+		if(tsk)
+		{
+			cout << "!(";
+			for(auto x : vtmp) cout<<x;
+			cout<<")";
+		}
+
+
 		cout<<")";
 		cout<<"{\n";
 
@@ -485,7 +576,7 @@ public:
 
 		cout<<"}";
 
-		tmap.clear();
+		//tmap.clear();
 
 		if(ctx->elif()) visitElif(ctx->elif());
 

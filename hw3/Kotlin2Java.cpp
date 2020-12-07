@@ -38,7 +38,7 @@ unordered_map <string,string> ckmap,gmap,tmap,bindmap,dtpmap;
 unordered_map <string,string> fmap
 ({
 	{"println","System.out.println"},{"is","instanceof"},{"!is","instanceof"},{"print","System.out.print"},{"listOf","List.of"},
-	{"setOf","Set.of"},{"Any()",""},{"size","size()"}
+	{"setOf","Set.of"},{"Any()",""},{"size","size()"},{"list.lastIndex","(list.size()-1)"},{"list.size","list.size()"}
 });
 
 
@@ -81,12 +81,32 @@ vector<string> transform(vector<info> vi,bool enter=true,bool ton=true,bool rs=f
 	return vret;
 }
 
-string typecheck(vector <info> vi,string bstr="")
+string typecheck(vector <info> vi,string bstr="",bool isret=false)
 {
 	string ret = "";
 	bool sok = false;
-	for(auto x : vi)
+	int base =0;
+
+	if(isret)
+	{		
+		bool ok = false;
+		for(;base<vi.size();++base)
+		{
+			if(vi[base].type == KotlinLexer::RETC)
+			{
+				++base;
+				ok |= 1;
+				break;
+			}
+		}
+
+		if(!ok) return "void ";
+	}
+
+	for(int i=base ;i<vi.size();++i)
 	{
+		info x = vi[i];
+
 		if(dtpmap.find(x.str) != dtpmap.end())
 		{
 			ret += dtpmap[x.str] + " ";
@@ -111,8 +131,10 @@ string typecheck(vector <info> vi,string bstr="")
 		}
 	}
 
-	for(auto x : vi)
+	for(int i=base ;i<vi.size();++i)
 	{
+		info x = vi[i];
+
 		switch(x.type)
 		{
 			case KotlinLexer::STR:
@@ -148,7 +170,6 @@ string typecheck(vector <info> vi,string bstr="")
 			break;
 		}
 	}
-
 	
 	return "void ";
 }
@@ -165,7 +186,7 @@ private:
 public:
 	virtual antlrcpp::Any visitProg(KotlinParser::ProgContext * ctx)
 	{
-		//visitPackageR(ctx->packageR());
+		if(ctx->packageR()) visitPackageR(ctx->packageR());
 
 		cout << "import java.util.*;\n\n";
 
@@ -253,7 +274,7 @@ public:
 			
 			if(ctx->whichfunction()->assign()) visitExpression(ctx->whichfunction()->assign()->expression());
 			
-			string tmp = typecheck(vs[c]);
+			string tmp = typecheck(vs[c],"",!!(ctx->whichfunction()->innerblock()));
 			if(tmp != "Any") dtpmap[ctx->ID()->getText()] = tmp;
 			cout << tmp;
 			
@@ -545,6 +566,8 @@ public:
 	{
 		bool tsk = false;
 
+		bool inck = false;
+
 		cout << "if(";
 		vs[++c].clear();
 		visitExpression(ctx->expression());
@@ -556,7 +579,51 @@ public:
 				string r = "(("+typemap[vs[c][i+1].str]+")"+vs[c][i-1].str+")";
 				tmap.insert({vs[c][i-1].str,r});		
 			}
+
+			inck |= (vs[c][i].type == KotlinLexer::IN | vs[c][i].type == KotlinLexer::NIN);
 		}
+		
+
+		if(inck)
+		{
+			string id = "";
+			string aexp = "";
+			string bexp = "";
+			bool ak = false;
+			bool nk = false;
+			bool bk = false;
+
+			for(int i=0;i<vs[c].size();++i)
+			{
+				
+
+				if(vs[c][i].type == KotlinLexer::IN) ak=true;
+				else if(vs[c][i].type == KotlinLexer::NIN)
+				{
+					ak = true;
+					nk = true;
+				}
+				else if(vs[c][i].type == KotlinLexer::TWODOT) bk = true;
+				else if(!ak) id += vs[c][i].str;
+				else
+				{
+					if(bk) bexp += vs[c][i].str;
+					else if(ak) aexp += vs[c][i].str;
+				}
+			}
+
+			vs[c].clear();
+			if(nk) vs[c].push_back({"!(",KotlinLexer::ID});
+			vs[c].push_back({aexp,KotlinLexer::ID});
+			vs[c].push_back({"<=",KotlinLexer::ID});
+			vs[c].push_back({id,KotlinLexer::ID});
+			vs[c].push_back({"&&",KotlinLexer::ID});
+			vs[c].push_back({id,KotlinLexer::ID});
+			vs[c].push_back({"<=",KotlinLexer::ID});
+			vs[c].push_back({bexp,KotlinLexer::ID});
+			if(nk) vs[c].push_back({")",KotlinLexer::ID});
+		}
+
 
 		vector<string> vtmp = transform(vs[c],false,false,tsk);
 
@@ -723,7 +790,38 @@ public:
 
 	virtual antlrcpp::Any visitExppostfix(KotlinParser::ExppostfixContext * ctx)
 	{
+		int base = vs[c].size();
 		visitChildren(ctx);
+
+		vector<info> vtmp;
+		string checkind = "";
+
+		while(vs[c].size() != base) 
+		{
+			vtmp.push_back(vs[c].back());
+			checkind += vs[c].back().str;
+			vs[c].pop_back();			
+		}
+
+		if(checkind == "indices.list")
+		{
+			vs[c].push_back({"0",KotlinLexer::NUM});
+			vs[c].push_back({"..",KotlinLexer::TWODOT});
+			vs[c].push_back({"(list.size()-1)",KotlinLexer::ID});
+		}
+		else
+		{
+			while(!vtmp.empty())
+			{
+				vs[c].push_back(vtmp.back());
+				vtmp.pop_back();
+			}
+		}
+		
+
+
+
+
 		return 0;
 	}
 

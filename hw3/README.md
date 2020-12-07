@@ -18,7 +18,6 @@ $ java Main
 
 ![Screenshot from 2020-12-07 11-41-06](https://user-images.githubusercontent.com/43700074/101303381-3c632800-3881-11eb-8940-673d28208ba4.png)
 
-
- 
+- [ ] class implement 
 
 

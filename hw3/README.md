@@ -4,8 +4,11 @@
 ## HOW TO RUN PROGRAM
 
 $ make
+
 $ ./Kotlin2java [input.kt] [output.java] (optional default name is input.java)
+
 $ javac [output.java]
+
 $ java Main
 
 

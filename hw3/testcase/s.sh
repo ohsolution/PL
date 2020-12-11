@@ -1,0 +1,20 @@
+../Kotlin2Java f1.kt f1.java
+../Kotlin2Java f2.kt f2.java
+../Kotlin2Java f3.kt f3.java
+../Kotlin2Java f4.kt f4.java
+../Kotlin2Java f5.kt f5.java
+../Kotlin2Java f6.kt f6.java
+../Kotlin2Java f7.kt f7.java
+../Kotlin2Java f8.kt f8.java
+../Kotlin2Java f10.kt f10.java
+../Kotlin2Java f12.kt f12.java
+../Kotlin2Java f13.kt f13.java
+../Kotlin2Java f14.kt f14.java
+../Kotlin2Java f15.kt f15.java
+../Kotlin2Java f16.kt f16.java
+../Kotlin2Java f17.kt f17.java
+../Kotlin2Java f18.kt f18.java
+../Kotlin2Java f19.kt f19.java
+../Kotlin2Java f20.kt f20.java
+../Kotlin2Java f21.kt f21.java
+

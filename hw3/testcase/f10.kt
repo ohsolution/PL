@@ -1,4 +1,3 @@
-package my.demo
 
 fun parseInt(str: String): Int? {
     return str.toIntOrNull()

@@ -182,6 +182,8 @@ private:
 	bool df= false;
 	bool ins= false;
 	bool cs = false;
+	bool abort = false;
+	string gnstr = "";
 
 public:
 	virtual antlrcpp::Any visitProg(KotlinParser::ProgContext * ctx)
@@ -224,7 +226,7 @@ public:
 	{
 		if(cls)
 		{
-			visitClassD(ctx->classD());
+			if(ctx->classD()) visitClassD(ctx->classD());
 
 			return 0;
 		}
@@ -240,59 +242,243 @@ public:
 
 	virtual antlrcpp::Any visitClassD(KotlinParser::ClassDContext * ctx)
 	{
-		if(ctx->ABSTARCT()) cout << "abstract ";
+		bool inter= false;
+		if(ctx->ABSTRACT()) cout << "abstract ";
 
 		if(ctx->CLASS()) cout << "class ";
-		else cout << "interface ";		
+		else 
+		{
+			cout << "interface ";
+			inter = true;
+		}
 
 		cout << ctx->ID()->getText() << " ";
+
+		if(ctx->CLASS()) 
+		{
+			fmap.insert({ctx->ID()->getText(),"new "+ ctx->ID()->getText()});
+			dtpmap.insert({ctx->ID()->getText(),ctx->ID()->getText()});
+		}
 
 		string name = ctx->ID()->getText();
 
 		vector<info> sup;
 
-		if(ctx->COLON()) sup = visitTypeC(ctx->typeC());
+		if(ctx->COLON()) visitTypec(ctx->typec(),&sup);
 
-		cout << "\n"
+		cout << "\n";
 
 		cout << "{\n";
 
 		if(ctx->cargus()) visitCargus(ctx->cargus(),sup,name);
 
-		visitClassinner(ctx->classinner());
+		visitClassinner(ctx->classinner(),inter);
 
-		cout << "\n}";
+		cout << "\n}\n";
 
 		return 0;
 	}
 
-	virtual antlrcpp::Any visitCargus(KotlinParser::CargsContext * ctx, vector<info> sup,string name)
+	virtual antlrcpp::Any visitClassinner(KotlinParser::ClassinnerContext * ctx,bool inter = false)
+	{
+		for(auto x : ctx->propertyC()) visitPropertyC(x,inter);
+
+		return 0;
+	}
+
+	virtual antlrcpp::Any visitPropertyC(KotlinParser::PropertyCContext * ctx,bool inter = false)
+	{
+		if(ctx->valcD()) visitValcD(ctx->valcD(),inter);
+		else visitFuncD(ctx->funcD());
+
+		return 0;
+	}
+
+	virtual antlrcpp::Any visitValcD(KotlinParser::ValcDContext * ctx,bool inter = false)
+	{
+		if(!inter) cout << "private ";
+
+		string tpstr = "";
+
+		vs[++c].clear();
+		visitTypef(ctx->typef(),true);
+		tpstr = vs[c][0].str;
+
+		cout << vs[c][0].str << " " << ctx->ID()->getText();
+		vs[c--].clear();
+
+		if(ctx->GET())
+		{
+			gnstr = tpstr;
+			cout << ";\n";
+
+			cout << "public " <<  tpstr << " get"<<ctx->ID()->getText()<<"()";
+
+			cout << "\n{\n";
+
+			cout << "return ("<< ctx->ID()->getText() << " = ";
+
+			fmap.insert({ctx->ID()->getText(),"get"+ctx->ID()->getText()+"()"});
+			dtpmap.insert({ctx->ID()->getText(),tpstr});
+
+			vs[++c].clear();
+			cout<<"(";
+			visitExpression(ctx->expression());
+			
+			transform(vs[c],false);	
+			cout<<")";
+
+			vs[c--].clear();
+			cout << ");\n}\n";
+		}
+		else if(ctx->expression())
+		{
+			vs[++c].clear();
+
+			visitExpression(ctx->expression());
+
+			transform(vs[c]);	
+
+			vs[c--].clear();
+		}
+		else 
+		{
+			if(inter) cout << "= null";
+			cout << ";\n";
+		}
+		return 0;
+	}
+
+	virtual antlrcpp::Any visitFuncD(KotlinParser::FuncDContext * ctx)
+	{
+		if(ctx->OVERRIDE()) cout<<"@Override\n";
+		else if(ctx->ABSTRACT()) cout<< "abstract ";
+
+		cout << "public ";
+
+		if(ctx->typef()) 
+		{
+			vs[++c].clear();
+			visitTypef(ctx->typef());
+			for(auto x : vs[c])
+			{
+				if(ctx->QUERY()) 
+				{
+					cout << Ntypemap[x.str]<<" ";
+					if(x.str != "Any") dtpmap.insert({ctx->ID()->getText(),Ntypemap[x.str]});
+				}
+				else 
+				{
+					cout << typemap[x.str] << " ";
+					if(x.str != "Any") dtpmap.insert({ctx->ID()->getText(),typemap[x.str]});
+				}
+			}
+			vs[c--].clear();
+		}
+		else
+		{
+			vs[++c].clear();
+			for(auto x : ctx->argument()->ID()) visitTerminal(x);
+			for(auto x : ctx->argument()->typef()) visitTypef(x);
+		
+			int sz = ctx->argument()->typef().size();
+
+			for(int i=0;i<sz;++i) ckmap.insert({vs[c][i].str,vs[c][i+sz].str});
+			
+			if(ctx->whichfunction()->assign()) visitExpression(ctx->whichfunction()->assign()->expression());
+			
+			string tmp = typecheck(vs[c],"",!!(ctx->whichfunction()->innerblock()));
+			if(tmp != "Any") dtpmap[ctx->ID()->getText()] = tmp;
+			cout << tmp;
+			
+			ckmap.clear();
+			vs[c--].clear();				
+		}
+		
+		cout << ctx->ID()->getText()<<"(";
+
+		visitArgument(ctx->argument());
+		cout<<")";
+		
+		
+		if(ctx->whichfunction()) 
+		{
+			visitWhichfunction(ctx->whichfunction());
+		}
+		else cout << ";\n";
+		
+		tmap.clear();
+
+		return 0;
+	}
+
+	virtual antlrcpp::Any visitCargus(KotlinParser::CargusContext * ctx, vector<info> sup,string name)
 	{
 		vector<string> arg;
+
+		vector<pair<string,string>> vp;
+
+		unordered_map <string,string> tmpmap;
 
 		for(auto x : ctx->cargu()) 
 		{
 			vs[++c].clear();
 			visitCargu(x);
 
-			
+			vp.push_back({vs[c][0].str,vs[c][1].str});
+			tmpmap.insert({vs[c][0].str,vs[c][0].str+"_cp"});
 
 			vs[c--].clear();
 		}
-
-
+		
 		cout << name << "(";
+		for(int i = 0; i< vp.size()-1 ; ++i)
+		{
+			auto x = vp[i];
+			cout << x.second << " " << x.first + "_cp,";
+		}
+
+		cout << vp.back().second << " " << vp.back().first<<"_cp";
+		cout << ")\n";
+		cout <<"{\n";
+
+
+		for(auto &x : sup)
+		{
+			if(tmpmap.find(x.str) != tmpmap.end()) x.str = tmpmap[x.str];
+		}
+
+		if(!sup.empty()) transform(sup);
+
+		for(auto x : vp)
+		{
+			cout << x.first << " = " << x.first << "_cp;\n";
+		}
+
+
+		cout << "\n}\n";
 
 
 		return 0;
 	} 
 
-	virtual antlrcpp::Any visitCargu()
-
-	virtual antlrcpp::Any visitTypeC(KotlinParser::TypeCContext* ctx)
+	virtual antlrcpp::Any visitCargu(KotlinParser::CarguContext * ctx)
 	{
-		vector<info> ret;
+		visitTerminal(ctx->ID());
 
+		visitTypef(ctx->typef(),true);
+
+		cout << "private ";
+
+		if(ctx->VAL()) cout << "final ";
+
+		cout << vs[c][1].str << " " << vs[c][0].str << ";\n";
+
+		return 0;
+	}
+
+	virtual antlrcpp::Any visitTypec(KotlinParser::TypecContext* ctx,vector<info> * ret)
+	{
 		for(auto x : ctx->expression()) 
 		{
 			vs[++c].clear();
@@ -302,15 +488,15 @@ public:
 			{
 				cout << "extends " << vs[c][0].str << " ";
 				
-				ret.push_back({"super",KotlinLexer::ID()});
+				ret->push_back({"super",KotlinLexer::ID});
 				for(int i=1;i<vs[c].size();++i)
 				{
-					if(vs[c][i].type != KotlinLexer::LPAR() &&  vs[c][i].type != KotlinLexer::RPAR())
-					{
-						info tmp = {vs[c][i].str+"_cp",vs[c][i].type }; 
-						ret.push_back(tmp);
+					info tmp = {vs[c][i].str,vs[c][i].type}; 
+					if(vs[c][i].type != KotlinLexer::LPAR &&  vs[c][i].type != KotlinLexer::RPAR)
+					{						
+						ret->push_back(tmp);
 					}
-					else ret.push_back(tmp);
+					else ret->push_back(tmp);
 				}
 			}
 			else cout << "implements " << vs[c][0].str; 
@@ -318,10 +504,7 @@ public:
 			vs[c--].clear();
 		}
 
-		ret = vs[c];
-
-		
-		return ret;
+		return 0;
 	}
 
 
@@ -574,11 +757,20 @@ public:
 
 	virtual antlrcpp::Any visitExit(KotlinParser::ExitContext * ctx)
 	{
-		cout << "return ";
+		
 		vs[++c].clear();
 		visitExpression(ctx->expression());
 
-		transform(vs[c]);
+		if(abort)
+		{
+			abort = false;
+			transform(vs[c]);
+		}
+		else
+		{
+			cout << "return ";
+			transform(vs[c]);
+		}
 
 		vs[c--].clear();
 
@@ -906,6 +1098,22 @@ public:
 			vs[c].push_back({"..",KotlinLexer::TWODOT});
 			vs[c].push_back({"(list.size()-1)",KotlinLexer::ID});
 		}
+		else if(checkind.find(")(sum.") != std::string::npos)
+		{
+			string lowstr = "";
+			for(auto x : gnstr) lowstr += tolower(x);
+			
+			vs[c].push_back({vtmp.back().str+".stream().mapTo"+gnstr+"("+gnstr+"::"+lowstr+"Value).sum()",KotlinLexer::ID});
+		}
+		else if(checkind.find(")(toIntOrNull.") != std::string::npos)
+		{
+			abort = true;
+			string iid = vtmp.back().str;
+			vs[c].push_back({"try{\n",KotlinLexer::ID});
+			vs[c].push_back({"Integer.parseInt("+iid+");\n}\n",KotlinLexer::ID});
+			vs[c].push_back({"catch(Exception e)\n{return null;}\n",KotlinLexer::ID});
+			vs[c].push_back({"return Integer.parseInt("+iid+")",KotlinLexer::ID});
+		}
 		else
 		{
 			while(!vtmp.empty())
@@ -914,10 +1122,6 @@ public:
 				vtmp.pop_back();
 			}
 		}
-		
-
-
-
 
 		return 0;
 	}
@@ -983,9 +1187,33 @@ public:
 		return 0;
 	}
 
-	virtual antlrcpp::Any visitTypef(KotlinParser::TypefContext * ctx)
+	virtual antlrcpp::Any visitTypef(KotlinParser::TypefContext * ctx,bool merge=false)
 	{
+		int base = vs[c].size();
+
 		visitChildren(ctx);
+
+		if(merge && (vs[c][base].type == KotlinLexer::ID))
+		{
+			vector <info> tmp;
+
+			while(vs[c].size() != base)
+			{
+				tmp.push_back(vs[c].back());
+				vs[c].pop_back();
+			}
+
+			string st = "";
+
+			while(!tmp.empty())
+			{
+				st += tmp.back().str;
+				tmp.pop_back();
+			}
+
+			vs[c].push_back({st,KotlinLexer::ID});
+		}
+
 		return 0;
 	}
 

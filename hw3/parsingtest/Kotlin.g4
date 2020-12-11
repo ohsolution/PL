@@ -201,7 +201,7 @@ argu
 oprpostfix
         : DPULS
         | DMINUS
-        | (DOT (ID|fccall))*
+        | (DOT (fccall|ID)) *
         ; 
 
 prefixopr

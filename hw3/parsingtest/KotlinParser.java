@@ -3476,15 +3476,15 @@ public class KotlinParser extends Parser {
 		public TerminalNode DOT(int i) {
 			return getToken(KotlinParser.DOT, i);
 		}
-		public List<TerminalNode> ID() { return getTokens(KotlinParser.ID); }
-		public TerminalNode ID(int i) {
-			return getToken(KotlinParser.ID, i);
-		}
 		public List<FccallContext> fccall() {
 			return getRuleContexts(FccallContext.class);
 		}
 		public FccallContext fccall(int i) {
 			return getRuleContext(FccallContext.class,i);
+		}
+		public List<TerminalNode> ID() { return getTokens(KotlinParser.ID); }
+		public TerminalNode ID(int i) {
+			return getToken(KotlinParser.ID, i);
 		}
 		public OprpostfixContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -3539,13 +3539,13 @@ public class KotlinParser extends Parser {
 					case 1:
 						{
 						setState(541);
-						match(ID);
+						fccall();
 						}
 						break;
 					case 2:
 						{
 						setState(542);
-						fccall();
+						match(ID);
 						}
 						break;
 					}
@@ -4505,7 +4505,7 @@ public class KotlinParser extends Parser {
 		"\2\2\u0215U\3\2\2\2\u0216\u0214\3\2\2\2\u0217\u021b\7L\2\2\u0218\u021b"+
 		"\5n8\2\u0219\u021b\58\35\2\u021a\u0217\3\2\2\2\u021a\u0218\3\2\2\2\u021a"+
 		"\u0219\3\2\2\2\u021bW\3\2\2\2\u021c\u0229\7\20\2\2\u021d\u0229\7\21\2"+
-		"\2\u021e\u0221\7\24\2\2\u021f\u0222\7L\2\2\u0220\u0222\5R*\2\u0221\u021f"+
+		"\2\u021e\u0221\7\24\2\2\u021f\u0222\5R*\2\u0220\u0222\7L\2\2\u0221\u021f"+
 		"\3\2\2\2\u0221\u0220\3\2\2\2\u0222\u0224\3\2\2\2\u0223\u021e\3\2\2\2\u0224"+
 		"\u0227\3\2\2\2\u0225\u0223\3\2\2\2\u0225\u0226\3\2\2\2\u0226\u0229\3\2"+
 		"\2\2\u0227\u0225\3\2\2\2\u0228\u021c\3\2\2\2\u0228\u021d\3\2\2\2\u0228"+

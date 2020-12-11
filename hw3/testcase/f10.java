@@ -1,4 +1,3 @@
-package my.demo;
 import java.util.*;
 
 
@@ -6,7 +5,12 @@ class Main{
 
 
 public static Integer parseInt(String str){
-return str.toIntOrNull ( );
+try{
+ Integer.parseInt(str);
+}
+ catch(Exception e)
+{return null;}
+ return Integer.parseInt(str);
 }
 public static void printProduct(String arg1,String arg2){
 final Integer x = parseInt ( arg1 );

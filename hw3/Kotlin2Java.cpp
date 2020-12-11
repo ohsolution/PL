@@ -190,6 +190,9 @@ public:
 
 		cout << "import java.util.*;\n\n";
 
+		for(auto x : ctx->outerL()) visitOuterL(x,true);
+
+
 		cout << "\n";
 		cout << "class Main{\n\n";
 
@@ -211,20 +214,114 @@ public:
 		return 0;
 	}
 
-	virtual antlrcpp::Any visitOuterL(KotlinParser::OuterLContext * ctx)
+	virtual antlrcpp::Any visitOuterL(KotlinParser::OuterLContext * ctx,bool cls = false)
 	{
-		for(auto x : ctx->outerR()) visitOuterR(x);
+		for(auto x : ctx->outerR()) visitOuterR(x,cls);
 		return 0;
 	}
 
-	virtual antlrcpp::Any visitOuterR(KotlinParser::OuterRContext * ctx)
+	virtual antlrcpp::Any visitOuterR(KotlinParser::OuterRContext * ctx,bool cls = false)
 	{
+		if(cls)
+		{
+			visitClassD(ctx->classD());
+
+			return 0;
+		}
+
+
 		if(df) 
 		{
 			if(ctx->functionD()) visitFunctionD(ctx->functionD(),false);
 		}
 		else if(ctx->propertyD()) visitPropertyD(ctx->propertyD());
 		return 0;
+	}
+
+	virtual antlrcpp::Any visitClassD(KotlinParser::ClassDContext * ctx)
+	{
+		if(ctx->ABSTARCT()) cout << "abstract ";
+
+		if(ctx->CLASS()) cout << "class ";
+		else cout << "interface ";		
+
+		cout << ctx->ID()->getText() << " ";
+
+		string name = ctx->ID()->getText();
+
+		vector<info> sup;
+
+		if(ctx->COLON()) sup = visitTypeC(ctx->typeC());
+
+		cout << "\n"
+
+		cout << "{\n";
+
+		if(ctx->cargus()) visitCargus(ctx->cargus(),sup,name);
+
+		visitClassinner(ctx->classinner());
+
+		cout << "\n}";
+
+		return 0;
+	}
+
+	virtual antlrcpp::Any visitCargus(KotlinParser::CargsContext * ctx, vector<info> sup,string name)
+	{
+		vector<string> arg;
+
+		for(auto x : ctx->cargu()) 
+		{
+			vs[++c].clear();
+			visitCargu(x);
+
+			
+
+			vs[c--].clear();
+		}
+
+
+		cout << name << "(";
+
+
+		return 0;
+	} 
+
+	virtual antlrcpp::Any visitCargu()
+
+	virtual antlrcpp::Any visitTypeC(KotlinParser::TypeCContext* ctx)
+	{
+		vector<info> ret;
+
+		for(auto x : ctx->expression()) 
+		{
+			vs[++c].clear();
+			visitExpression(x);
+
+			if(vs[c].size() > 1)
+			{
+				cout << "extends " << vs[c][0].str << " ";
+				
+				ret.push_back({"super",KotlinLexer::ID()});
+				for(int i=1;i<vs[c].size();++i)
+				{
+					if(vs[c][i].type != KotlinLexer::LPAR() &&  vs[c][i].type != KotlinLexer::RPAR())
+					{
+						info tmp = {vs[c][i].str+"_cp",vs[c][i].type }; 
+						ret.push_back(tmp);
+					}
+					else ret.push_back(tmp);
+				}
+			}
+			else cout << "implements " << vs[c][0].str; 
+
+			vs[c--].clear();
+		}
+
+		ret = vs[c];
+
+		
+		return ret;
 	}
 
 
